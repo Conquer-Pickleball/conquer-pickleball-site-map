@@ -1,3 +1,4 @@
 .DS_Store
 .claude/
 build/nyc_borough_boundaries.geojson
+build/nyc_school_districts.geojson

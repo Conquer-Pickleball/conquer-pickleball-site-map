@@ -55,15 +55,21 @@ def project_schools(schools, projection):
     return schools
 
 
+PUBLIC_FIELDS = ('name', 'borough', 'status', 'grades', 'x', 'y')
+
+
+def to_public(schools):
+    # Donor-facing site: no exact street addresses, no internal contract/
+    # financial/contact notes. Only what's safe to show publicly.
+    return [{k: s.get(k) for k in PUBLIC_FIELDS} for s in schools]
+
+
 def main():
     schools = json.load(open(os.path.join(HERE, 'schools.json')))
     geometry = json.load(open(os.path.join(HERE, 'geometry.json')))
-    schedules_path = os.path.join(HERE, 'schedules.json')
-    schedules = json.load(open(schedules_path)) if os.path.exists(schedules_path) else {}
 
     schools = project_schools(schools, geometry['projection'])
-    for s in schools:
-        s['sessions'] = schedules.get(s['name'], [])
+    schools = to_public(schools)
 
     map_data = {
         'paths': geometry['paths'],
