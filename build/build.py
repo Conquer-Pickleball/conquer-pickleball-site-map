@@ -75,7 +75,7 @@ def main():
 
     head = open(os.path.join(HERE, 'head.html')).read()
     tail = open(os.path.join(HERE, 'tail.html')).read()
-    map_data_json = json.dumps(map_data, separators=(',', ':'))
+    map_data_json = json.dumps(map_data, indent=1)
 
     out_path = os.path.join(PROJECT, 'pickleball-site-map.html')
     with open(out_path, 'w') as f:
