@@ -14,6 +14,7 @@
     --court-green:#1F8B4C;
     --slate-done:#5C7285;
     --amber-early:#C17817;
+    --live-now:#D6472B;
     --water:#DCE8ED;
     --focus:#0F3E73;
     --shadow: 0 1px 2px rgba(22,33,58,.06), 0 8px 24px -12px rgba(22,33,58,.18);
@@ -37,6 +38,7 @@
     --court-green:#4CC98A;
     --slate-done:#8FA3B8;
     --amber-early:#E8A94A;
+    --live-now:#FF7A5C;
     --water:#0B2430;
     --focus:#7CC4FF;
     --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.55);
@@ -56,6 +58,7 @@
       --court-green:#4CC98A;
       --slate-done:#8FA3B8;
       --amber-early:#E8A94A;
+      --live-now:#FF7A5C;
       --water:#0B2430;
       --focus:#7CC4FF;
       --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.55);
@@ -321,6 +324,53 @@
   .pin:hover .halo, .pin.selected .halo{ opacity:1; }
   .pin.dimmed{ opacity:.22; }
   .pin.selected .core{ stroke:var(--ink); stroke-width:1.5; }
+
+  .pin .live-ring{
+    display:none;
+    fill:none;
+    stroke:var(--live-now);
+    stroke-width:2;
+    opacity:.85;
+    transform-origin:center;
+    animation:pin-pulse 2.2s ease-out infinite;
+  }
+  .pin.is-live .live-ring{ display:block; }
+  @keyframes pin-pulse{
+    0%   { r:7;  opacity:.85; }
+    70%  { r:15; opacity:0; }
+    100% { r:15; opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .pin .live-ring{ animation:none; r:11; opacity:.55; }
+  }
+
+  .live-badge{
+    display:inline-flex; align-items:center; gap:4px;
+    font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--live-now);
+    flex:none;
+  }
+  .live-badge .live-dot{
+    width:6px;height:6px;border-radius:50%;background:var(--live-now);
+    animation:live-dot-pulse 1.6s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .live-badge .live-dot{ animation:none; }
+  }
+  @keyframes live-dot-pulse{
+    0%,100%{ opacity:1; } 50%{ opacity:.35; }
+  }
+  .live-banner{
+    display:flex; align-items:center; gap:7px;
+    background:color-mix(in srgb, var(--live-now) 14%, transparent);
+    color:var(--live-now);
+    border:1px solid color-mix(in srgb, var(--live-now) 35%, transparent);
+    border-radius:7px;
+    padding:7px 10px;
+    font-size:12.5px;
+    font-weight:600;
+    margin-bottom:10px;
+  }
 
   .pin-leader{
     stroke:var(--ink-faint);

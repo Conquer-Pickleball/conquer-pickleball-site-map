@@ -1,0 +1,898 @@
+{
+  "75X012 - PS12 - Lewis & Clark": [
+    {
+      "season": "Spring '27",
+      "status": "Finished",
+      "date_start": "2027-03-16",
+      "date_end": "2027-05-11",
+      "days_of_week": [
+        "tue"
+      ],
+      "start_time": "10:30",
+      "end_time": "12:15",
+      "raw_dates_text": "3/16 – 5/11 (3) 3/16, 4/13, 5/11",
+      "raw_times_text": "Tue 10:30am-12:15pm"
+    },
+    {
+      "season": "Fall '26",
+      "status": "Upcoming",
+      "date_start": "2026-10-13",
+      "date_end": "2026-12-08",
+      "days_of_week": [
+        "tue"
+      ],
+      "start_time": "10:30",
+      "end_time": "12:15",
+      "raw_dates_text": "10/13 – 12/8 (3) 10/13, 11/10, 12/8",
+      "raw_times_text": "Tue 10:30am-12:15pm"
+    },
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-14",
+      "date_end": "2026-08-11",
+      "days_of_week": [
+        "tue"
+      ],
+      "start_time": "10:30",
+      "end_time": "11:20",
+      "raw_dates_text": "7/14 – 8/11 (5) 7/14, 7/21, 7/28, 8/4, 8/11",
+      "raw_times_text": "Tue 10:30-11:20am"
+    },
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-04-18",
+      "date_end": "2026-06-13",
+      "days_of_week": [
+        "sat"
+      ],
+      "start_time": "11:30",
+      "end_time": "12:15",
+      "raw_dates_text": "4/18 – 6/13 (3) 4/18, 5/16, 6/13 (Special Needs HS+Parents program, PS 12X)",
+      "raw_times_text": "Sat 11:30-12:15"
+    },
+    {
+      "season": "Winter '26",
+      "status": "Finished",
+      "date_start": "2026-01-10",
+      "date_end": "2026-03-07",
+      "days_of_week": [
+        "sat"
+      ],
+      "start_time": "11:30",
+      "end_time": "12:15",
+      "raw_dates_text": "1/10 – 3/7 (3) 1/10, 2/7, 3/7 (Special Needs HS+Parents program, PS 12X)",
+      "raw_times_text": "Sat 11:30-12:15"
+    },
+    {
+      "season": "Fall '25",
+      "status": "Finished",
+      "date_start": "2025-11-08",
+      "date_end": "2025-12-13",
+      "days_of_week": [
+        "sat"
+      ],
+      "start_time": "11:30",
+      "end_time": "12:15",
+      "raw_dates_text": "11/8, 12/13 (Special Needs HS+Parents program, PS 12X)",
+      "raw_times_text": "Sat 11:30-12:15"
+    }
+  ],
+  "Horace Mann": [
+    {
+      "season": "Summer '26",
+      "status": "Finished",
+      "date_start": "2026-06-15",
+      "date_end": "2026-06-18",
+      "days_of_week": [
+        "mon",
+        "tue",
+        "wed",
+        "thu"
+      ],
+      "start_time": "09:00",
+      "end_time": "11:00",
+      "raw_dates_text": "6/15-6/18",
+      "raw_times_text": "Mon - Thu 9-11am"
+    },
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-04-16",
+      "date_end": "2026-05-28",
+      "days_of_week": [
+        "thu"
+      ],
+      "start_time": "15:20",
+      "end_time": "16:25",
+      "raw_dates_text": "4/16-5/28",
+      "raw_times_text": "Thu 3:20-4:25"
+    }
+  ],
+  "MS391X": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": null,
+      "date_end": null,
+      "days_of_week": [],
+      "start_time": null,
+      "end_time": null,
+      "raw_dates_text": "TBD",
+      "raw_times_text": "TBD"
+    }
+  ],
+  "PS/MS 5X - Port Morris": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-08",
+      "date_end": "2026-08-14",
+      "days_of_week": [
+        "mon",
+        "wed"
+      ],
+      "start_time": null,
+      "end_time": null,
+      "raw_dates_text": "7/8 – 8/14 (12) 7/8, 7/13, 7/15, 7/20, 7/22, 7/27, 7/29, 8/3, 8/5, 8/10, 8/12, 8/14",
+      "raw_times_text": "Mon / Wed"
+    },
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-03-04",
+      "date_end": "2026-05-18",
+      "days_of_week": [
+        "mon",
+        "wed"
+      ],
+      "start_time": "15:30",
+      "end_time": "17:20",
+      "raw_dates_text": "3/4 – 5/18 (22) 3/4, 3/9, 3/11, 3/16, 3/18, 3/23, 3/25, 3/30, 4/1, 4/6, 4/8, 4/13, 4/15, 4/20, 4/22, 4/27, 4/29, 5/4, 5/6, 5/11, 5/13, 5/18",
+      "raw_times_text": "Mon / Wed 3:30-5:20"
+    }
+  ],
+  "PS449X - Grant Avenue Elementary School": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-28",
+      "date_end": "2026-08-14",
+      "days_of_week": [
+        "tue",
+        "fri"
+      ],
+      "start_time": "12:00",
+      "end_time": "14:20",
+      "raw_dates_text": "7/28 – 8/14 (6) 7/28, 7/31, 8/4, 8/7, 8/11, 8/14",
+      "raw_times_text": "Tue / Fri 12:00-2:20pm"
+    }
+  ],
+  "PS175X - City Island School": [
+    {
+      "season": "Summer '26",
+      "status": "Active",
+      "date_start": "2026-07-16",
+      "date_end": "2026-08-06",
+      "days_of_week": [
+        "thu"
+      ],
+      "start_time": "08:20",
+      "end_time": "11:35",
+      "raw_dates_text": "7/16 – 8/6 (4) 7/16, 7/23, 7/30, 8/6",
+      "raw_times_text": "Thu 8:20-11:35am"
+    }
+  ],
+  "PS9X - Ryer Avenue": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-03-03",
+      "date_end": "2026-05-05",
+      "days_of_week": [
+        "tue",
+        "thu"
+      ],
+      "start_time": "14:45",
+      "end_time": "16:45",
+      "raw_dates_text": "3/3 – 5/5 (19) 3/3, 3/5, 3/10, 3/12, 3/17, 3/19, 3/24, 3/26, 3/31, 4/2, 4/7, 4/9, 4/14, 4/16, 4/21, 4/23, 4/28, 4/30, 5/5",
+      "raw_times_text": "Tue / Thu 2:45-4:45"
+    },
+    {
+      "season": "Fall '25",
+      "status": "Finished",
+      "date_start": "2025-10-21",
+      "date_end": "2025-12-11",
+      "days_of_week": [
+        "tue",
+        "thu"
+      ],
+      "start_time": "14:30",
+      "end_time": "16:00",
+      "raw_dates_text": "10/21-12/11",
+      "raw_times_text": "Tue / Thu 2:30-4:00"
+    }
+  ],
+  "PS311X - Lucero": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-03-13",
+      "date_end": "2026-06-12",
+      "days_of_week": [
+        "fri"
+      ],
+      "start_time": "09:40",
+      "end_time": "11:40",
+      "raw_dates_text": "3/13 – 6/12 (14) 3/13, 3/20, 3/27, 4/3, 4/10, 4/17, 4/24, 5/1, 5/8, 5/15, 5/22, 5/29, 6/5, 6/12",
+      "raw_times_text": "Fri 9:40-11:40am"
+    }
+  ],
+  "PS163X - Arthur A. Schomburg": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-03-13",
+      "date_end": "2026-05-19",
+      "days_of_week": [
+        "fri",
+        "tue"
+      ],
+      "start_time": "14:30",
+      "end_time": "16:00",
+      "raw_dates_text": "3/13 – 5/19 (20) 3/13, 3/17, 3/20, 3/24, 3/27, 3/31, 4/3, 4/7, 4/10, 4/14, 4/17, 4/21, 4/24, 4/28, 5/1, 5/5, 5/8, 5/12, 5/15, 5/19",
+      "raw_times_text": "Fri & Tue 2:30-4:00pm"
+    }
+  ],
+  "PS132X - Garret A. Morgan": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-04-21",
+      "date_end": "2026-05-28",
+      "days_of_week": [
+        "tue",
+        "thu"
+      ],
+      "start_time": "14:30",
+      "end_time": "16:00",
+      "raw_dates_text": "4/21 – 5/28 (12) 4/21, 4/23, 4/28, 4/30, 5/5, 5/7, 5/12, 5/14, 5/19, 5/21, 5/26, 5/28",
+      "raw_times_text": "Tue / Thu 2:30-4:00pm"
+    }
+  ],
+  "PS28X - Mount Hope": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-04-30",
+      "date_end": "2026-06-25",
+      "days_of_week": [
+        "tue",
+        "thu"
+      ],
+      "start_time": "11:40",
+      "end_time": "12:30",
+      "raw_dates_text": "4/30 – 6/25 (15) 4/30, 5/5, 5/7, 5/12, 5/14, 5/19, 5/21, 5/26, 5/28, 6/2, 6/9, 6/16, 6/18, 6/23, 6/25",
+      "raw_times_text": "Tue / Thu 11:40am-12:30pm"
+    },
+    {
+      "season": "Fall '25",
+      "status": "Finished",
+      "date_start": "2025-10-24",
+      "date_end": "2025-12-22",
+      "days_of_week": [
+        "mon",
+        "fri"
+      ],
+      "start_time": "14:30",
+      "end_time": "16:00",
+      "raw_dates_text": "10/24-12/22",
+      "raw_times_text": "Mon / Fri 2:30-4:00"
+    }
+  ],
+  "PS357X - Young Voices Academy": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-04-13",
+      "date_end": "2026-05-27",
+      "days_of_week": [
+        "mon",
+        "wed"
+      ],
+      "start_time": "09:50",
+      "end_time": "11:20",
+      "raw_dates_text": "4/13 – 5/27 (13) 4/13, 4/15, 4/20, 4/22, 4/27, 4/29, 5/4, 5/6, 5/11, 5/13, 5/18, 5/20, 5/27",
+      "raw_times_text": "Mon / Wed 9:50-11:20am"
+    }
+  ],
+  "PS294X - Walton Avenue School": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-04-01",
+      "date_end": "2026-06-18",
+      "days_of_week": [
+        "wed",
+        "thu"
+      ],
+      "start_time": "08:00",
+      "end_time": "09:45",
+      "raw_dates_text": "4/1 – 6/18 (18) 4/1, 4/22, 4/23, 4/29, 4/30, 5/13, 5/14, 5/18, 5/20, 5/21, 5/27, 5/28, 6/3, 6/4, 6/10, 6/11, 6/17, 6/18",
+      "raw_times_text": "Wed / Thu 8:00-9:45am"
+    }
+  ],
+  "PS41X - Gun Hill Road": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-04-20",
+      "date_end": "2026-06-10",
+      "days_of_week": [
+        "mon",
+        "wed"
+      ],
+      "start_time": "07:00",
+      "end_time": "08:00",
+      "raw_dates_text": "4/20 – 6/10 (14) 4/20, 4/22, 4/27, 4/29, 5/4, 5/6, 5/11, 5/13, 5/18, 5/20, 6/1, 6/3, 6/8, 6/10",
+      "raw_times_text": "Mon / Wed 7:00-8:00am"
+    }
+  ],
+  "MS366K - Science and Medicine MS": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-08",
+      "date_end": "2026-08-12",
+      "days_of_week": [
+        "wed"
+      ],
+      "start_time": "08:00",
+      "end_time": "12:00",
+      "raw_dates_text": "7/8 – 8/12 (6) 7/8, 7/15, 7/22, 7/29, 8/5, 8/12",
+      "raw_times_text": "Wed 8:00am-12:00pm"
+    }
+  ],
+  "PS200K - Benson School": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-06",
+      "date_end": "2026-08-13",
+      "days_of_week": [
+        "mon",
+        "tue",
+        "thu"
+      ],
+      "start_time": "13:00",
+      "end_time": "15:00",
+      "raw_dates_text": "7/6 – 8/13 (18) 7/6, 7/7, 7/9, 7/13, 7/14, 7/16, 7/20, 7/21, 7/23, 7/27, 7/28, 7/30, 8/3, 8/4, 8/6, 8/10, 8/11, 8/13 (lead; will run at PS163)",
+      "raw_times_text": "Mon / Tue / Thu 1-2pm & 2-3pm"
+    },
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-03-03",
+      "date_end": "2026-05-05",
+      "days_of_week": [
+        "tue",
+        "thu"
+      ],
+      "start_time": "15:15",
+      "end_time": "17:15",
+      "raw_dates_text": "3/3 – 5/5 (15) 3/3, 3/10, 3/12, 3/17, 3/19, 3/24, 3/26, 3/31, 4/14, 4/16, 4/21, 4/23, 4/28, 4/30, 5/5",
+      "raw_times_text": "Tue / Thu 3:15-5:15pm"
+    }
+  ],
+  "Park Slope Armory": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-13",
+      "date_end": "2026-08-19",
+      "days_of_week": [
+        "mon",
+        "wed"
+      ],
+      "start_time": "09:00",
+      "end_time": "11:00",
+      "raw_dates_text": "7/13 – 8/19 (12) 7/13, 7/15, 7/20, 7/22, 7/27, 7/29, 8/3, 8/5, 8/10, 8/12, 8/17, 8/19",
+      "raw_times_text": "Mon / Wed 9-10am & 10-11am"
+    },
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-02-24",
+      "date_end": "2026-06-09",
+      "days_of_week": [
+        "tue"
+      ],
+      "start_time": "15:15",
+      "end_time": "16:00",
+      "raw_dates_text": "2/24 – 6/9 (16) 2/24, 3/3, 3/10, 3/17, 3/24, 3/31, 4/7, 4/14, 4/21, 4/28, 5/5, 5/12, 5/19, 5/26, 6/2, 6/9",
+      "raw_times_text": "Tue 3:15-4:00"
+    }
+  ],
+  "PS124K - Silas B. Dutcher": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-03-02",
+      "date_end": "2026-04-27",
+      "days_of_week": [
+        "mon",
+        "wed"
+      ],
+      "start_time": "15:15",
+      "end_time": "17:15",
+      "raw_dates_text": "3/2 – 4/27 (17) 3/2, 3/4, 3/9, 3/11, 3/16, 3/18, 3/23, 3/25, 3/30, 4/1, 4/6, 4/8, 4/13, 4/15, 4/20, 4/22, 4/27",
+      "raw_times_text": "Mon / Wed 3:15-5:15pm"
+    }
+  ],
+  "PS131K": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-03-06",
+      "date_end": "2026-05-14",
+      "days_of_week": [
+        "thu",
+        "fri"
+      ],
+      "start_time": "15:15",
+      "end_time": "17:15",
+      "raw_dates_text": "3/6 – 5/14 (15) 3/6, 3/12, 3/13, 3/19, 3/26, 3/27, 4/16, 4/17, 4/23, 4/24, 4/30, 5/1, 5/7, 5/8, 5/14",
+      "raw_times_text": "Thu / Fri 3:15-5:15pm"
+    }
+  ],
+  "PS177K - The Marlboro": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-03-16",
+      "date_end": "2026-05-15",
+      "days_of_week": [
+        "mon",
+        "fri"
+      ],
+      "start_time": "07:00",
+      "end_time": "07:50",
+      "raw_dates_text": "3/16 – 5/15 (18) 3/16, 3/20, 3/23, 3/27, 3/30, 4/3, 4/6, 4/10, 4/13, 4/17, 4/20, 4/24, 4/27, 5/1, 5/4, 5/8, 5/11, 5/15",
+      "raw_times_text": "Mon / Fri 7:00-7:50am"
+    }
+  ],
+  "PS11K - Purvis J. Behan": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-04-29",
+      "date_end": "2026-06-10",
+      "days_of_week": [
+        "wed"
+      ],
+      "start_time": "15:15",
+      "end_time": "17:15",
+      "raw_dates_text": "4/29 – 6/10 (6) 4/29, 5/6, 5/13, 5/20, 6/3, 6/10",
+      "raw_times_text": "Wed 3:15-5:15"
+    }
+  ],
+  "PS38K - The Pacific": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-05-04",
+      "date_end": "2026-06-08",
+      "days_of_week": [
+        "mon"
+      ],
+      "start_time": "15:15",
+      "end_time": "17:15",
+      "raw_dates_text": "5/4 – 6/8 (5) 5/4, 5/11, 5/18, 6/1, 6/8",
+      "raw_times_text": "Mon 3:15-5:15"
+    }
+  ],
+  "IS211K - John Wilson": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-05-18",
+      "date_end": "2026-06-15",
+      "days_of_week": [
+        "mon"
+      ],
+      "start_time": "09:10",
+      "end_time": "12:19",
+      "raw_dates_text": "5/18 – 6/15 (4) 5/18, 6/1, 6/8, 6/15",
+      "raw_times_text": "Mondays, 9:10am-12:19pm (kickoff 5/18 is 9:10-10:45 only)"
+    }
+  ],
+  "JHS278 - Marine Park": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-05-08",
+      "date_end": "2026-06-12",
+      "days_of_week": [
+        "fri"
+      ],
+      "start_time": "11:59",
+      "end_time": "14:20",
+      "raw_dates_text": "5/8 – 6/12 (3) 5/8, 5/29, 6/12",
+      "raw_times_text": "Fridays, 11:59am-2:20pm"
+    }
+  ],
+  "PS149K - Danny Kaye": [
+    {
+      "season": "Spring '26",
+      "status": "Upcoming",
+      "date_start": null,
+      "date_end": null,
+      "days_of_week": [],
+      "start_time": null,
+      "end_time": null,
+      "raw_dates_text": "TBD (8 sessions, PO WO260169489 signed 4/18/26; need to call for start date)",
+      "raw_times_text": "TBD"
+    }
+  ],
+  "PS307K - Daniel Hale Williams": [
+    {
+      "season": "Fall '25",
+      "status": "Finished",
+      "date_start": "2025-10-09",
+      "date_end": "2025-12-18",
+      "days_of_week": [
+        "tue",
+        "thu"
+      ],
+      "start_time": "15:15",
+      "end_time": "17:15",
+      "raw_dates_text": "10/9-12/18",
+      "raw_times_text": "Tue / Thu 3:15-5:15"
+    }
+  ],
+  "Ingersoll Community Center": [
+    {
+      "season": "Summer '25",
+      "status": "Finished",
+      "date_start": null,
+      "date_end": null,
+      "days_of_week": [],
+      "start_time": null,
+      "end_time": null,
+      "raw_dates_text": "Summer 25",
+      "raw_times_text": "TBD"
+    }
+  ],
+  "Union Settlement - Esperanza Prep": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-14",
+      "date_end": "2026-08-04",
+      "days_of_week": [
+        "tue"
+      ],
+      "start_time": "13:45",
+      "end_time": null,
+      "raw_dates_text": "7/14 – 8/4 (4) 7/14, 7/21, 7/28, 8/4",
+      "raw_times_text": "Tue 1:45pm (times TBD per notes)"
+    }
+  ],
+  "University Settlement - East Side Community School": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-07",
+      "date_end": "2026-08-13",
+      "days_of_week": [
+        "tue",
+        "thu"
+      ],
+      "start_time": "15:00",
+      "end_time": "17:00",
+      "raw_dates_text": "7/7 – 8/13 (12) 7/7, 7/9, 7/14, 7/16, 7/21, 7/23, 7/28, 7/30, 8/4, 8/6, 8/11, 8/13",
+      "raw_times_text": "Tue / Thu 3-5 PM (3-4 art, 4-5 gaming)"
+    }
+  ],
+  "East Side Community Beacon": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-03-03",
+      "date_end": "2026-05-29",
+      "days_of_week": [
+        "tue",
+        "fri"
+      ],
+      "start_time": "13:30",
+      "end_time": "17:30",
+      "raw_dates_text": "3/3 – 5/29 (26) 3/3, 3/6, 3/10, 3/13, 3/17, 3/20, 3/24, 3/27, 3/31, 4/3, 4/7, 4/10, 4/14, 4/17, 4/21, 4/24, 4/28, 5/1, 5/5, 5/8, 5/12, 5/15, 5/19, 5/22, 5/26, 5/29",
+      "raw_times_text": "Tue 3:30-5:30 / Fri 1:30-3:30"
+    },
+    {
+      "season": "Fall '25",
+      "status": "Finished",
+      "date_start": "2025-10-07",
+      "date_end": "2025-12-19",
+      "days_of_week": [
+        "tue",
+        "fri"
+      ],
+      "start_time": "13:45",
+      "end_time": "17:30",
+      "raw_dates_text": "10/7-12/19",
+      "raw_times_text": "Tue 3:30-5:30 / Fri 1:45-3:45"
+    },
+    {
+      "season": "Summer '25",
+      "status": "Finished",
+      "date_start": "2025-07-09",
+      "date_end": "2025-08-06",
+      "days_of_week": [
+        "wed"
+      ],
+      "start_time": "15:00",
+      "end_time": "17:00",
+      "raw_dates_text": "7/9 – 8/6 (5) 7/9, 7/16, 7/23, 7/30, 8/6",
+      "raw_times_text": "Wed 3:00-5:00pm"
+    }
+  ],
+  "PS343M - The Peck Slip School": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-08",
+      "date_end": "2026-08-05",
+      "days_of_week": [
+        "wed"
+      ],
+      "start_time": "08:15",
+      "end_time": "12:00",
+      "raw_dates_text": "7/8 – 8/5 (5) 7/8, 7/15, 7/22, 7/29, 8/5",
+      "raw_times_text": "Wed 8:15am-12:00pm (5 sessions)"
+    }
+  ],
+  "PS111M - Adolph S. Ochs": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-09",
+      "date_end": "2026-08-06",
+      "days_of_week": [
+        "thu"
+      ],
+      "start_time": "08:15",
+      "end_time": "11:50",
+      "raw_dates_text": "7/9 – 8/6 (5) 7/9, 7/16, 7/23, 7/30, 8/6",
+      "raw_times_text": "Thu 8:15-11:50am"
+    }
+  ],
+  "Allen Stevenson": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-04-07",
+      "date_end": "2026-06-04",
+      "days_of_week": [
+        "tue",
+        "thu"
+      ],
+      "start_time": "15:30",
+      "end_time": "16:30",
+      "raw_dates_text": "4/7 - 6/4",
+      "raw_times_text": "Tue / Thu 3:30-4:30"
+    },
+    {
+      "season": "Winter '26",
+      "status": "Finished",
+      "date_start": "2026-01-22",
+      "date_end": "2026-03-19",
+      "days_of_week": [
+        "mon",
+        "thu"
+      ],
+      "start_time": "15:30",
+      "end_time": "16:30",
+      "raw_dates_text": "1/22-3/19",
+      "raw_times_text": "Mon / Thu 3:30-4:30"
+    },
+    {
+      "season": "Fall '25",
+      "status": "Finished",
+      "date_start": "2025-11-10",
+      "date_end": "2026-01-14",
+      "days_of_week": [
+        "mon",
+        "wed"
+      ],
+      "start_time": "15:30",
+      "end_time": "16:30",
+      "raw_dates_text": "11/10-1/14",
+      "raw_times_text": "Mon / Wed 3:30-4:30"
+    }
+  ],
+  "Guttman Community College": [
+    {
+      "season": "Fall '25",
+      "status": "Finished",
+      "date_start": "2025-10-22",
+      "date_end": "2025-11-12",
+      "days_of_week": [
+        "wed"
+      ],
+      "start_time": "18:00",
+      "end_time": "20:00",
+      "raw_dates_text": "10/22 – 11/12 (4) 10/22, 10/29, 11/5, 11/12",
+      "raw_times_text": "Wed 6:00-8:00pm"
+    }
+  ],
+  "Campos Community Center": [
+    {
+      "season": "Spring '26",
+      "status": "Discussion",
+      "date_start": null,
+      "date_end": null,
+      "days_of_week": [],
+      "start_time": null,
+      "end_time": null,
+      "raw_dates_text": "ASAP",
+      "raw_times_text": "TBD"
+    }
+  ],
+  "PS35Q - Nathaniel Woodhull": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-07",
+      "date_end": "2026-08-04",
+      "days_of_week": [
+        "tue"
+      ],
+      "start_time": "10:00",
+      "end_time": "12:00",
+      "raw_dates_text": "7/7 – 8/4 (5) 7/7, 7/14, 7/21, 7/28, 8/4",
+      "raw_times_text": "Tue 10:00am-12:00pm"
+    }
+  ],
+  "24Q093 - IS093 Ridgewood": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-08",
+      "date_end": "2026-08-05",
+      "days_of_week": [
+        "wed"
+      ],
+      "start_time": "08:30",
+      "end_time": "12:25",
+      "raw_dates_text": "7/8 – 8/5 (5) 7/8, 7/15, 7/22, 7/29, 8/5",
+      "raw_times_text": "Wed 8:30am-12:25pm"
+    }
+  ],
+  "27Q106 - Lighthouse Elementary": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-13",
+      "date_end": "2026-08-10",
+      "days_of_week": [],
+      "start_time": null,
+      "end_time": null,
+      "raw_dates_text": "Wks of Jul 13 – Aug 10 (6 sessions; tournament finale)",
+      "raw_times_text": "TBD"
+    }
+  ],
+  "25Q164 - PS164 Queens Valley": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-13",
+      "date_end": "2026-08-07",
+      "days_of_week": [],
+      "start_time": null,
+      "end_time": null,
+      "raw_dates_text": "Wks of Jul 13 – Aug 3 (6 sessions; ends Aug 7)",
+      "raw_times_text": "TBD"
+    }
+  ],
+  "24Q102 - PS102 Bayview": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-13",
+      "date_end": "2026-08-10",
+      "days_of_week": [],
+      "start_time": null,
+      "end_time": null,
+      "raw_dates_text": "Wks of Jul 13 – Aug 10 (6 sessions; tournament finale)",
+      "raw_times_text": "TBD"
+    }
+  ],
+  "27Q060 - PS060 Woodhaven": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-13",
+      "date_end": "2026-08-10",
+      "days_of_week": [],
+      "start_time": null,
+      "end_time": null,
+      "raw_dates_text": "Wks of Jul 13 – Aug 10 (6 sessions; tournament finale)",
+      "raw_times_text": "TBD"
+    }
+  ],
+  "29Q176 - PS176 Cambria Heights": [
+    {
+      "season": "Summer '26",
+      "status": "Upcoming",
+      "date_start": "2026-07-13",
+      "date_end": "2026-08-10",
+      "days_of_week": [],
+      "start_time": null,
+      "end_time": null,
+      "raw_dates_text": "Wks of Jul 13 – Aug 10 (6 sessions; tournament finale)",
+      "raw_times_text": "TBD"
+    }
+  ],
+  "IS113Q - Anthony J. Pranzo": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-03-05",
+      "date_end": "2026-06-04",
+      "days_of_week": [
+        "thu"
+      ],
+      "start_time": "14:30",
+      "end_time": "16:30",
+      "raw_dates_text": "3/5 – 6/4 (12) 3/5, 3/12, 3/19, 4/9, 4/16, 4/23, 4/30, 5/7, 5/14, 5/21, 5/28, 6/4",
+      "raw_times_text": "Thu 2:30-4:30"
+    }
+  ],
+  "IS61Q - Leonardo Da Vinci": [
+    {
+      "season": "Spring '26",
+      "status": "Finished",
+      "date_start": "2026-04-07",
+      "date_end": "2026-06-05",
+      "days_of_week": [
+        "tue",
+        "fri"
+      ],
+      "start_time": null,
+      "end_time": null,
+      "raw_dates_text": "4/7 – 6/5 (18) 4/7, 4/10, 4/14, 4/17, 4/21, 4/24, 4/28, 5/1, 5/5, 5/8, 5/12, 5/15, 5/19, 5/22, 5/26, 5/29, 6/2, 6/5",
+      "raw_times_text": "Tue / Fri TBD"
+    }
+  ],
+  "PS239Q": [
+    {
+      "season": "Winter '26",
+      "status": "Completed",
+      "date_start": "2026-01-12",
+      "date_end": "2026-03-10",
+      "days_of_week": [
+        "mon",
+        "tue"
+      ],
+      "start_time": "14:20",
+      "end_time": "15:20",
+      "raw_dates_text": "1/12-3/10",
+      "raw_times_text": "Mon / Tue 2:20-3:20"
+    }
+  ],
+  "PS159Q": [
+    {
+      "season": "Fall '25",
+      "status": "Pending",
+      "date_start": null,
+      "date_end": null,
+      "days_of_week": [],
+      "start_time": null,
+      "end_time": null,
+      "raw_dates_text": "TBD",
+      "raw_times_text": "TBD"
+    }
+  ]
+}

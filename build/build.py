@@ -58,8 +58,12 @@ def project_schools(schools, projection):
 def main():
     schools = json.load(open(os.path.join(HERE, 'schools.json')))
     geometry = json.load(open(os.path.join(HERE, 'geometry.json')))
+    schedules_path = os.path.join(HERE, 'schedules.json')
+    schedules = json.load(open(schedules_path)) if os.path.exists(schedules_path) else {}
 
     schools = project_schools(schools, geometry['projection'])
+    for s in schools:
+        s['sessions'] = schedules.get(s['name'], [])
 
     map_data = {
         'paths': geometry['paths'],

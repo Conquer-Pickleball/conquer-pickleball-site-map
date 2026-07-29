@@ -77,6 +77,7 @@ function pinMarkup(s){
   return `
     <g class="pin" data-idx="${s.idx}" tabindex="0" role="button" aria-label="${escapeAttr(s.name)}" transform="translate(${s.x},${s.y})">
       <circle class="halo" r="11" stroke="${color}"/>
+      <circle class="live-ring" r="7"/>
       <line class="pin-leader" x1="6" y1="0" x2="11" y2="0"/>
       <circle class="hit" r="12" fill="transparent"/>
       ${core}
@@ -84,11 +85,61 @@ function pinMarkup(s){
     </g>`;
 }
 
+// ---------- live "in session now" ----------
+function nowInNYC(){
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(new Date());
+  const m = {};
+  parts.forEach(p => { m[p.type] = p.value; });
+  const dayMap = { Mon:'mon', Tue:'tue', Wed:'wed', Thu:'thu', Fri:'fri', Sat:'sat', Sun:'sun' };
+  return {
+    date: `${m.year}-${m.month}-${m.day}`,
+    day: dayMap[m.weekday],
+    time: `${m.hour}:${m.minute}`,
+  };
+}
+
+function sessionIsLive(session, now){
+  if (!session.date_start || !session.date_end || !session.start_time || !session.end_time) return false;
+  if (now.date < session.date_start || now.date > session.date_end) return false;
+  if (!session.days_of_week || !session.days_of_week.includes(now.day)) return false;
+  return now.time >= session.start_time && now.time <= session.end_time;
+}
+
+function computeLiveStatus(){
+  const now = nowInNYC();
+  let changed = false;
+  DATA.schools.forEach(s => {
+    const live = (s.sessions || []).find(sess => sessionIsLive(sess, now)) || null;
+    const wasLive = !!s.liveSession;
+    s.liveSession = live;
+    if (wasLive !== !!live) changed = true;
+  });
+  return changed;
+}
+
+function applyLiveIndicators(){
+  mapSvg.querySelectorAll('.pin').forEach(p => {
+    const idx = parseInt(p.dataset.idx, 10);
+    p.classList.toggle('is-live', !!DATA.schools[idx].liveSession);
+  });
+}
+
 function escapeAttr(str){
   return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 }
 function escapeHtml(str){
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function formatTime(hhmm){
+  const [h, m] = hhmm.split(':').map(Number);
+  const period = h >= 12 ? 'pm' : 'am';
+  const h12 = ((h + 11) % 12) + 1;
+  return m === 0 ? `${h12}${period}` : `${h12}:${String(m).padStart(2,'0')}${period}`;
 }
 
 // ---------- render map ----------
@@ -129,7 +180,9 @@ function renderLegend(){
       case 'ring-dashed': shape = `<svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5" fill="none" stroke="${color}" stroke-width="2" stroke-dasharray="2 2"/></svg>`; break;
     }
     return `<span class="item">${shape}${meta.label}</span>`;
-  }).join('') + `<span class="item" style="opacity:.6">◌ Staten Island — no active sites</span>`;
+  }).join('')
+    + `<span class="item"><span class="live-badge"><span class="live-dot"></span>Live</span>In session right now</span>`
+    + `<span class="item" style="opacity:.6">◌ Staten Island — no active sites</span>`;
 }
 
 // ---------- filter chips ----------
@@ -154,9 +207,11 @@ function renderStats(){
   const total = DATA.schools.length;
   const active = DATA.schools.filter(s => s.bucket === 'active').length;
   const upcoming = DATA.schools.filter(s => s.bucket === 'upcoming').length;
+  const liveNow = DATA.schools.filter(s => s.liveSession).length;
   el.innerHTML = `
     <div class="stat-chip"><span class="num">${total}</span><span class="lbl">Total sites</span></div>
-    <div class="stat-chip active"><span class="num">${active}</span><span class="lbl">Active now</span></div>
+    <div class="stat-chip" style="border-color:color-mix(in srgb, var(--live-now) 45%, var(--line))"><span class="num" style="color:var(--live-now)">${liveNow}</span><span class="lbl">In session now</span></div>
+    <div class="stat-chip active"><span class="num">${active}</span><span class="lbl">Active season</span></div>
     <div class="stat-chip"><span class="num">${upcoming}</span><span class="lbl">Upcoming</span></div>
     <div class="stat-chip"><span class="num">4</span><span class="lbl">Boroughs</span></div>
   `;
@@ -191,8 +246,12 @@ function renderDetail(){
   const s = DATA.schools[state.selected];
   const meta = STATUS_META[s.bucket];
   const q = encodeURIComponent(s.address);
+  const liveBanner = s.liveSession
+    ? `<div class="live-banner"><span class="live-badge"><span class="live-dot"></span>Live</span>In session now · ends ${formatTime(s.liveSession.end_time)}</div>`
+    : '';
   el.innerHTML = `
     <div class="detail-card">
+      ${liveBanner}
       <div class="d-top">
         <div>
           <h3>${escapeHtml(s.name)}</h3>
@@ -231,6 +290,7 @@ function renderList(){
   scroll.innerHTML = sorted.map(s => {
     const meta = STATUS_META[s.bucket];
     const sel = s.idx === state.selected ? ' selected' : '';
+    const live = s.liveSession ? `<span class="live-badge"><span class="live-dot"></span>Live</span>` : '';
     return `
       <button class="site-row${sel}" data-idx="${s.idx}" type="button">
         <span class="marker" style="background:var(${meta.cssvar})"></span>
@@ -238,6 +298,7 @@ function renderList(){
           <span class="name">${escapeHtml(s.name)}</span>
           <span class="sub">${escapeHtml(s.address)}</span>
         </span>
+        ${live}
         <span class="boro-tag">${s.borough}</span>
       </button>`;
   }).join('');
@@ -456,6 +517,7 @@ function toggleChip(btn, set){
 
 // ---------- init ----------
 renderMapShell();
+computeLiveStatus();
 renderLegend();
 renderChips();
 renderStats();
@@ -464,6 +526,19 @@ renderDetail();
 renderList();
 updateZoomUI();
 applyMapFilter();
+applyLiveIndicators();
 wireMapEvents();
 wireToolbar();
+
+// re-check "in session now" status every 30s — no server round-trip needed,
+// it's pure client-side date math against each site's baked-in schedule.
+setInterval(() => {
+  const changed = computeLiveStatus();
+  applyLiveIndicators();
+  renderStats();
+  if (changed){
+    renderList();
+    if (state.selected !== null) renderDetail();
+  }
+}, 30000);
 </script>
