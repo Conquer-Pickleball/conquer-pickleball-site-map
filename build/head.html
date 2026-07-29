@@ -1,0 +1,584 @@
+<title>Conquer Youth Programs — Site Map</title>
+<style>
+  :root{
+    --ink:#16213A;
+    --ink-soft:#51606F;
+    --ink-faint:#84919C;
+    --paper:#EEF3EF;
+    --panel:#FFFFFF;
+    --panel-2:#F5F8F5;
+    --line:#D6DEDA;
+    --line-soft:#E4EAE6;
+    --court-blue:#1D5FA8;
+    --court-blue-ink:#0F3E73;
+    --court-green:#1F8B4C;
+    --slate-done:#5C7285;
+    --amber-early:#C17817;
+    --water:#DCE8ED;
+    --focus:#0F3E73;
+    --shadow: 0 1px 2px rgba(22,33,58,.06), 0 8px 24px -12px rgba(22,33,58,.18);
+    --radius-s:6px;
+    --radius-m:10px;
+    --serif: Palatino, "Palatino Linotype", "Iowan Old Style", Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
+  }
+  :root[data-theme="dark"]{
+    --ink:#E9EFEA;
+    --ink-soft:#A9B8B0;
+    --ink-faint:#7C8B84;
+    --paper:#0E1B18;
+    --panel:#152623;
+    --panel-2:#11201D;
+    --line:#264039;
+    --line-soft:#1D332D;
+    --court-blue:#5AA9E8;
+    --court-blue-ink:#BFE0FF;
+    --court-green:#4CC98A;
+    --slate-done:#8FA3B8;
+    --amber-early:#E8A94A;
+    --water:#0B2430;
+    --focus:#7CC4FF;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.55);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#E9EFEA;
+      --ink-soft:#A9B8B0;
+      --ink-faint:#7C8B84;
+      --paper:#0E1B18;
+      --panel:#152623;
+      --panel-2:#11201D;
+      --line:#264039;
+      --line-soft:#1D332D;
+      --court-blue:#5AA9E8;
+      --court-blue-ink:#BFE0FF;
+      --court-green:#4CC98A;
+      --slate-done:#8FA3B8;
+      --amber-early:#E8A94A;
+      --water:#0B2430;
+      --focus:#7CC4FF;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.55);
+    }
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background: var(--court-blue); color:#fff; }
+  a{ color:var(--court-blue-ink); }
+  a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible{
+    outline: 2px solid var(--focus);
+    outline-offset:2px;
+  }
+
+  .shell{
+    max-width:1320px;
+    margin:0 auto;
+    padding:28px 28px 56px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+
+  /* ---------- Header ---------- */
+  header.top{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:20px;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--line);
+  }
+  .title-block .eyebrow{
+    font-family:var(--sans);
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--court-green);
+  }
+  .title-block h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(28px, 3.6vw, 40px);
+    line-height:1.05;
+    margin:6px 0 6px;
+    text-wrap:balance;
+    color:var(--ink);
+  }
+  .title-block p{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:14.5px;
+    max-width:52ch;
+  }
+  .title-block p a{ color:var(--ink-soft); text-decoration-color:var(--line); }
+
+  .stat-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .stat-chip{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius-m);
+    padding:10px 16px;
+    min-width:96px;
+    box-shadow:var(--shadow);
+  }
+  .stat-chip .num{
+    font-family:var(--mono);
+    font-variant-numeric:tabular-nums;
+    font-size:22px;
+    font-weight:600;
+    color:var(--ink);
+    display:block;
+    line-height:1.1;
+  }
+  .stat-chip .lbl{
+    font-size:11px;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .stat-chip.active .num{ color:var(--court-green); }
+
+  /* ---------- Toolbar ---------- */
+  .toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:10px 14px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius-m);
+    padding:12px 14px;
+    box-shadow:var(--shadow);
+  }
+  .search-box{
+    position:relative;
+    flex:1 1 220px;
+    min-width:180px;
+  }
+  .search-box input{
+    width:100%;
+    padding:8px 12px 8px 32px;
+    border-radius:var(--radius-s);
+    border:1px solid var(--line);
+    background:var(--panel-2);
+    color:var(--ink);
+    font-size:14px;
+    font-family:var(--sans);
+  }
+  .search-box svg{
+    position:absolute;
+    left:9px; top:50%; transform:translateY(-50%);
+    width:15px;height:15px;
+    color:var(--ink-faint);
+  }
+  .chip-group{ display:flex; gap:6px; flex-wrap:wrap; }
+  .chip-group .glabel{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--ink-faint);
+    align-self:center;
+    margin-right:2px;
+  }
+  .chip{
+    border:1px solid var(--line);
+    background:var(--panel-2);
+    color:var(--ink-soft);
+    font-family:var(--sans);
+    font-size:12.5px;
+    font-weight:500;
+    padding:6px 11px;
+    border-radius:999px;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    line-height:1.2;
+    transition:background .12s ease, color .12s ease, border-color .12s ease;
+  }
+  .chip:hover{ border-color:var(--ink-faint); }
+  .chip[aria-pressed="true"]{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:var(--panel);
+  }
+  .chip .dot{ width:8px;height:8px;border-radius:50%;flex:none; }
+  .chip.reset{ margin-left:auto; }
+
+  /* ---------- Main grid ---------- */
+  .main-grid{
+    display:grid;
+    grid-template-columns: minmax(0,1.55fr) minmax(300px, 0.95fr);
+    gap:18px;
+    align-items:start;
+  }
+  @media (max-width: 880px){
+    .main-grid{ grid-template-columns: 1fr; }
+  }
+
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius-m);
+    box-shadow:var(--shadow);
+  }
+
+  /* ---------- Map ---------- */
+  .map-panel{ padding:14px 14px 10px; }
+  .map-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:6px;
+  }
+  .map-head h2{
+    font-family:var(--serif);
+    font-size:17px;
+    font-weight:600;
+    margin:0;
+  }
+  .map-head .count{
+    font-size:12px;
+    color:var(--ink-faint);
+    font-variant-numeric:tabular-nums;
+  }
+  .map-wrap{
+    position:relative;
+    width:100%;
+    border-radius:var(--radius-s);
+    overflow:hidden;
+    background:var(--water);
+  }
+  .map-wrap svg{ display:block; width:100%; height:auto; }
+
+  .boro-shape{
+    fill:var(--panel-2);
+    stroke:var(--line);
+    stroke-width:1.6;
+    transition:fill .15s ease;
+    cursor:pointer;
+  }
+  .boro-shape.si{ fill:var(--water); stroke:var(--line-soft); opacity:.6; cursor:default; }
+  .boro-shape:hover{ fill:var(--line-soft); }
+  .boro-shape.dimmed{ opacity:.35; }
+  .boro-shape.zoomed-active{ fill:var(--line-soft); stroke:var(--court-blue); stroke-width:2.4; }
+  .boro-label{
+    font-family:var(--sans);
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    fill:var(--ink-faint);
+    opacity:.55;
+    pointer-events:none;
+  }
+  .boro-label.si{ font-size:11px; }
+  #mapSvg.is-zoomed .boro-label{ display:none; }
+
+  .zoom-back{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    border:1px solid var(--line);
+    background:var(--panel-2);
+    color:var(--ink-soft);
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:600;
+    padding:5px 10px 5px 8px;
+    border-radius:999px;
+    cursor:pointer;
+  }
+  .zoom-back svg{ width:13px;height:13px; }
+  .zoom-back:hover{ border-color:var(--ink-faint); }
+  .zoom-hint{
+    font-size:11.5px;
+    color:var(--ink-faint);
+  }
+
+  .court-lines line{
+    stroke:var(--line);
+    stroke-width:1;
+    stroke-dasharray:2 4;
+    opacity:.5;
+  }
+
+  .pin{ cursor:pointer; }
+  .pin .halo{ fill:none; stroke-width:2; opacity:0; transition:opacity .12s ease, r .12s ease; }
+  .pin:hover .halo, .pin.selected .halo{ opacity:1; }
+  .pin.dimmed{ opacity:.22; }
+  .pin.selected .core{ stroke:var(--ink); stroke-width:1.5; }
+
+  .pin-leader{
+    stroke:var(--ink-faint);
+    stroke-width:1;
+    opacity:0;
+    pointer-events:none;
+  }
+  .pin-label{
+    font-family:var(--sans);
+    font-size:10.5px;
+    font-weight:600;
+    fill:var(--ink);
+    paint-order:stroke;
+    stroke:var(--panel);
+    stroke-width:3px;
+    stroke-linejoin:round;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .12s ease;
+  }
+  #mapSvg.is-zoomed .pin-label,
+  #mapSvg.is-zoomed .pin-leader{ opacity:1; }
+  #mapSvg.is-zoomed .pin.selected .pin-label{ fill:var(--court-blue-ink); }
+
+  .map-legend{
+    display:flex; flex-wrap:wrap; gap:12px 18px;
+    padding:10px 4px 4px;
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .map-legend .item{ display:flex; align-items:center; gap:6px; }
+  .map-legend svg{ width:14px;height:14px; flex:none; }
+
+  .tooltip{
+    position:absolute;
+    pointer-events:none;
+    background:var(--ink);
+    color:var(--paper);
+    padding:7px 10px;
+    border-radius:7px;
+    font-size:12.5px;
+    line-height:1.35;
+    max-width:220px;
+    box-shadow:0 8px 20px -8px rgba(0,0,0,.4);
+    transform:translate(-50%, -100%);
+    opacity:0;
+    transition:opacity .1s ease;
+    z-index:20;
+  }
+  :root[data-theme="dark"] .tooltip, @media (prefers-color-scheme:dark){ .tooltip{ } }
+  .tooltip.show{ opacity:1; }
+  .tooltip b{ display:block; font-weight:600; margin-bottom:2px; }
+  .tooltip .t-status{ font-size:11px; opacity:.8; }
+
+  /* ---------- Side column ---------- */
+  .side-col{ display:flex; flex-direction:column; gap:18px; }
+
+  .detail-panel{ padding:16px; min-height:132px; }
+  .detail-empty{
+    color:var(--ink-faint);
+    font-size:13.5px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-height:100px;
+  }
+  .detail-empty svg{ width:26px;height:26px; flex:none; opacity:.6; }
+  .detail-card .d-top{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+  }
+  .detail-card h3{
+    font-family:var(--serif);
+    font-size:18px;
+    margin:0 0 2px;
+    line-height:1.2;
+    text-wrap:balance;
+  }
+  .status-pill{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:11px; font-weight:600; letter-spacing:.03em;
+    padding:3px 9px; border-radius:999px;
+    white-space:nowrap;
+  }
+  .status-pill .dot{ width:7px;height:7px;border-radius:50%; }
+  .detail-card .addr{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:8px 0 2px;
+  }
+  .detail-card .boro-type{
+    font-size:12px;
+    color:var(--ink-faint);
+    margin-bottom:10px;
+  }
+  .detail-card .note{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line-soft);
+    padding-top:10px;
+    margin-top:6px;
+  }
+  .detail-card .maplink{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:12.5px; font-weight:600;
+    margin-top:12px;
+    text-decoration:none;
+    color:var(--court-blue-ink);
+  }
+  .detail-card .maplink svg{ width:13px;height:13px; }
+  .detail-card .close{
+    background:none;border:none;color:var(--ink-faint);cursor:pointer;
+    font-size:18px; line-height:1; padding:2px 4px;
+  }
+
+  .breakdown-panel{ padding:16px; }
+  .breakdown-panel h2{
+    font-family:var(--serif);
+    font-size:15px;
+    margin:0 0 12px;
+  }
+  .bd-row{ display:flex; align-items:center; gap:10px; margin-bottom:9px; }
+  .bd-row:last-child{ margin-bottom:0; }
+  .bd-row .bd-label{ width:76px; flex:none; font-size:12.5px; color:var(--ink-soft); }
+  .bd-row .bd-track{
+    flex:1; height:8px; border-radius:4px; background:var(--panel-2);
+    overflow:hidden; border:1px solid var(--line-soft);
+  }
+  .bd-row .bd-fill{ height:100%; background:var(--court-blue); border-radius:4px 0 0 4px; }
+  .bd-row .bd-num{
+    width:22px; text-align:right; font-variant-numeric:tabular-nums;
+    font-size:12.5px; color:var(--ink-faint);
+  }
+
+  /* ---------- List ---------- */
+  .list-panel{ padding:14px 0 6px; }
+  .list-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:0 16px 10px;
+  }
+  .list-head h2{ font-family:var(--serif); font-size:15px; margin:0; }
+  .list-head .count{ font-size:12px; color:var(--ink-faint); font-variant-numeric:tabular-nums; }
+  .list-scroll{
+    max-height:520px;
+    overflow-y:auto;
+    border-top:1px solid var(--line-soft);
+  }
+  .site-row{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 16px;
+    background:none;
+    border:none;
+    border-bottom:1px solid var(--line-soft);
+    text-align:left;
+    cursor:pointer;
+    font-family:var(--sans);
+    color:var(--ink);
+  }
+  .site-row:hover{ background:var(--panel-2); }
+  .site-row.selected{ background:var(--panel-2); box-shadow:inset 3px 0 0 var(--court-blue); }
+  .site-row .marker{ width:9px;height:9px;border-radius:50%;flex:none; }
+  .site-row .info{ min-width:0; flex:1; }
+  .site-row .name{
+    font-size:13.5px; font-weight:600;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .site-row .sub{
+    font-size:11.5px; color:var(--ink-faint);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .site-row .boro-tag{
+    font-size:10.5px; color:var(--ink-faint);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:2px 6px;
+    flex:none;
+  }
+  .empty-row{ padding:22px 16px; color:var(--ink-faint); font-size:13px; text-align:center; }
+
+  footer.credit{
+    color:var(--ink-faint);
+    font-size:12px;
+    text-align:center;
+    padding-top:6px;
+  }
+  footer.credit a{ color:var(--ink-faint); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; }
+  }
+</style>
+
+<div class="shell">
+
+  <header class="top">
+    <div class="title-block">
+      <div class="eyebrow">Conquer Youth Programs</div>
+      <h1>Youth Pickleball Site Map</h1>
+      <p>Every school, community center, and partner site running Conquer's youth pickleball programming across the five boroughs. Companion to the <a href="https://dashboard-site-dusky.vercel.app/" target="_blank" rel="noopener">programs &amp; revenue dashboard</a>.</p>
+    </div>
+    <div class="stat-row" id="statRow"></div>
+  </header>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search sites or addresses…" autocomplete="off">
+    </div>
+    <div class="chip-group" id="boroChips">
+      <span class="glabel">Borough</span>
+    </div>
+    <div class="chip-group" id="statusChips">
+      <span class="glabel">Status</span>
+    </div>
+    <span class="zoom-hint" style="margin-right:auto;">Completed sites hidden by default</span>
+    <button class="chip reset" id="resetBtn" type="button">Reset filters</button>
+  </div>
+
+  <div class="main-grid">
+    <section class="panel map-panel">
+      <div class="map-head">
+        <h2 id="mapTitle">Five Boroughs</h2>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="zoom-hint" id="zoomHint">Click a borough to zoom in</span>
+          <span class="count" id="mapCount"></span>
+        </div>
+      </div>
+      <div class="map-wrap" id="mapWrap">
+        <svg id="mapSvg" viewBox="0 0 900 900" role="img" aria-label="Map of youth pickleball program sites across New York City"></svg>
+        <div class="tooltip" id="tooltip"></div>
+      </div>
+      <div class="map-legend" id="mapLegend"></div>
+    </section>
+
+    <div class="side-col">
+      <section class="panel detail-panel" id="detailPanel"></section>
+      <section class="panel breakdown-panel">
+        <h2>Sites by Borough</h2>
+        <div id="breakdown"></div>
+      </section>
+    </div>
+  </div>
+
+  <section class="panel list-panel">
+    <div class="list-head">
+      <h2>All Sites</h2>
+      <span class="count" id="listCount"></span>
+    </div>
+    <div class="list-scroll" id="listScroll"></div>
+  </section>
+
+  <footer class="credit">
+    Site directory reconstructed from the Conquer Youth Programs dashboard · geocoded via NYC DOE school locations (NYC Open Data) and OpenStreetMap · borough boundaries: NYC Department of City Planning
+  </footer>
+</div>
+
+<script>
+const DATA =

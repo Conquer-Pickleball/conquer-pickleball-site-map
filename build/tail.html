@@ -1,0 +1,469 @@
+;
+
+const BOROUGHS = ['Bronx','Brooklyn','Manhattan','Queens'];
+
+const STATUS_META = {
+  active:    { label:'Active',      cssvar:'--court-green', shape:'circle-filled' },
+  upcoming:  { label:'Upcoming',    cssvar:'--court-blue',   shape:'diamond-filled' },
+  completed: { label:'Completed',   cssvar:'--slate-done',   shape:'ring' },
+  early:     { label:'Early stage', cssvar:'--amber-early',  shape:'ring-dashed' },
+};
+const STATUS_ORDER = ['early','upcoming','active','completed'];
+
+function bucketFor(rawStatus){
+  const s = (rawStatus||'').toLowerCase();
+  if (s === 'active') return 'active';
+  if (s === 'upcoming') return 'upcoming';
+  if (s === 'finished' || s === 'completed') return 'completed';
+  return 'early'; // pending, discussion
+}
+
+function cssv(name){
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+DATA.schools.forEach((s, i) => {
+  s.idx = i;
+  s.bucket = bucketFor(s.status);
+});
+
+// ---------- state ----------
+const state = {
+  search: '',
+  boroughs: new Set(),   // empty = all
+  // "completed" sites are hidden by default to keep the map from cluttering
+  // with programs that already wrapped — toggle the Completed chip to bring them back.
+  statuses: new Set(['early','upcoming','active']),
+  selected: null,        // idx
+  zoomedBorough: null,
+};
+
+function shortLabel(name){
+  const parts = name.split(' - ');
+  const base = parts.length > 1 ? parts[parts.length - 1] : name;
+  return base.length > 24 ? base.slice(0, 22) + '…' : base;
+}
+
+function matches(s){
+  if (state.boroughs.size && !state.boroughs.has(s.borough)) return false;
+  if (state.statuses.size && !state.statuses.has(s.bucket)) return false;
+  if (state.search){
+    const q = state.search.toLowerCase();
+    if (!s.name.toLowerCase().includes(q) && !s.address.toLowerCase().includes(q)) return false;
+  }
+  return true;
+}
+
+// ---------- pin shape markup ----------
+function pinMarkup(s){
+  const meta = STATUS_META[s.bucket];
+  const color = `var(${meta.cssvar})`;
+  let core = '';
+  switch(meta.shape){
+    case 'circle-filled':
+      core = `<circle class="core" r="6.5" fill="${color}" stroke="var(--panel)" stroke-width="1.5"/>`;
+      break;
+    case 'diamond-filled':
+      core = `<rect class="core" x="-5.6" y="-5.6" width="11.2" height="11.2" transform="rotate(45)" fill="${color}" stroke="var(--panel)" stroke-width="1.5"/>`;
+      break;
+    case 'ring':
+      core = `<circle class="core" r="6" fill="var(--panel)" stroke="${color}" stroke-width="2.4"/>`;
+      break;
+    case 'ring-dashed':
+      core = `<circle class="core" r="6" fill="var(--panel)" stroke="${color}" stroke-width="2.4" stroke-dasharray="2.6 2.6"/>`;
+      break;
+  }
+  const label = shortLabel(s.name);
+  return `
+    <g class="pin" data-idx="${s.idx}" tabindex="0" role="button" aria-label="${escapeAttr(s.name)}" transform="translate(${s.x},${s.y})">
+      <circle class="halo" r="11" stroke="${color}"/>
+      <line class="pin-leader" x1="6" y1="0" x2="11" y2="0"/>
+      <circle class="hit" r="12" fill="transparent"/>
+      ${core}
+      <text class="pin-label" x="13" y="3.5">${escapeHtml(label)}</text>
+    </g>`;
+}
+
+function escapeAttr(str){
+  return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+}
+function escapeHtml(str){
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ---------- render map ----------
+const mapSvg = document.getElementById('mapSvg');
+
+function renderMapShell(){
+  const boroPaths = ['Staten Island', ...BOROUGHS].map(name => {
+    const cls = name === 'Staten Island' ? 'boro-shape si' : 'boro-shape';
+    return `<path class="${cls}" data-boro="${name}" d="${DATA.paths[name]}"></path>`;
+  }).join('');
+
+  const labels = Object.entries(DATA.labels).map(([name, pos]) => {
+    return `<text class="boro-label" x="${pos[0]}" y="${pos[1]}" text-anchor="middle">${name}</text>`;
+  }).join('');
+
+  const siLabelD = DATA.paths['Staten Island'];
+
+  const pins = DATA.schools.map(pinMarkup).join('');
+
+  mapSvg.innerHTML = `
+    <g id="boroughsGroup">${boroPaths}</g>
+    <g id="labelsGroup">${labels}</g>
+    <g id="pinsGroup">${pins}</g>
+  `;
+}
+
+// ---------- legend ----------
+function renderLegend(){
+  const el = document.getElementById('mapLegend');
+  el.innerHTML = STATUS_ORDER.map(k => {
+    const meta = STATUS_META[k];
+    const color = `var(${meta.cssvar})`;
+    let shape = '';
+    switch(meta.shape){
+      case 'circle-filled': shape = `<svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5" fill="${color}"/></svg>`; break;
+      case 'diamond-filled': shape = `<svg viewBox="0 0 14 14"><rect x="2.3" y="2.3" width="9.4" height="9.4" transform="rotate(45 7 7)" fill="${color}"/></svg>`; break;
+      case 'ring': shape = `<svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5" fill="none" stroke="${color}" stroke-width="2"/></svg>`; break;
+      case 'ring-dashed': shape = `<svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5" fill="none" stroke="${color}" stroke-width="2" stroke-dasharray="2 2"/></svg>`; break;
+    }
+    return `<span class="item">${shape}${meta.label}</span>`;
+  }).join('') + `<span class="item" style="opacity:.6">◌ Staten Island — no active sites</span>`;
+}
+
+// ---------- filter chips ----------
+function renderChips(){
+  const boroEl = document.getElementById('boroChips');
+  boroEl.innerHTML = '<span class="glabel">Borough</span>' + BOROUGHS.map(b => {
+    const count = DATA.schools.filter(s => s.borough === b).length;
+    return `<button class="chip" data-kind="boro" data-val="${b}" aria-pressed="false" type="button">${b} <span style="opacity:.55">${count}</span></button>`;
+  }).join('');
+
+  const statusEl = document.getElementById('statusChips');
+  statusEl.innerHTML = '<span class="glabel">Status</span>' + STATUS_ORDER.map(k => {
+    const meta = STATUS_META[k];
+    const pressed = state.statuses.has(k);
+    return `<button class="chip" data-kind="status" data-val="${k}" aria-pressed="${pressed}" type="button"><span class="dot" style="background:var(${meta.cssvar})"></span>${meta.label}</button>`;
+  }).join('');
+}
+
+// ---------- stats ----------
+function renderStats(){
+  const el = document.getElementById('statRow');
+  const total = DATA.schools.length;
+  const active = DATA.schools.filter(s => s.bucket === 'active').length;
+  const upcoming = DATA.schools.filter(s => s.bucket === 'upcoming').length;
+  el.innerHTML = `
+    <div class="stat-chip"><span class="num">${total}</span><span class="lbl">Total sites</span></div>
+    <div class="stat-chip active"><span class="num">${active}</span><span class="lbl">Active now</span></div>
+    <div class="stat-chip"><span class="num">${upcoming}</span><span class="lbl">Upcoming</span></div>
+    <div class="stat-chip"><span class="num">4</span><span class="lbl">Boroughs</span></div>
+  `;
+}
+
+// ---------- breakdown bars ----------
+function renderBreakdown(){
+  const el = document.getElementById('breakdown');
+  const counts = BOROUGHS.map(b => ({ b, n: DATA.schools.filter(s => s.borough === b).length }))
+    .sort((a,c) => c.n - a.n);
+  const max = Math.max(...counts.map(c => c.n));
+  el.innerHTML = counts.map(c => `
+    <div class="bd-row">
+      <span class="bd-label">${c.b}</span>
+      <span class="bd-track"><span class="bd-fill" style="width:${(c.n/max*100).toFixed(0)}%"></span></span>
+      <span class="bd-num">${c.n}</span>
+    </div>
+  `).join('');
+}
+
+// ---------- detail panel ----------
+function renderDetail(){
+  const el = document.getElementById('detailPanel');
+  if (state.selected === null){
+    el.innerHTML = `
+      <div class="detail-empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg>
+        <span>Click a pin on the map, or a row below, to see site details.</span>
+      </div>`;
+    return;
+  }
+  const s = DATA.schools[state.selected];
+  const meta = STATUS_META[s.bucket];
+  const q = encodeURIComponent(s.address);
+  el.innerHTML = `
+    <div class="detail-card">
+      <div class="d-top">
+        <div>
+          <h3>${escapeHtml(s.name)}</h3>
+          <span class="status-pill" style="background:color-mix(in srgb, var(${meta.cssvar}) 16%, transparent); color:var(${meta.cssvar})"><span class="dot" style="background:var(${meta.cssvar})"></span>${meta.label} · ${escapeHtml(s.status)}</span>
+        </div>
+        <button class="close" id="detailClose" aria-label="Clear selection" type="button">&times;</button>
+      </div>
+      <div class="addr">${escapeHtml(s.address)}</div>
+      <div class="boro-type">${escapeHtml(s.borough)} · ${escapeHtml(s.type)}</div>
+      <div class="note">${escapeHtml(s.note)}</div>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+        Open in Google Maps
+      </a>
+    </div>`;
+  document.getElementById('detailClose').addEventListener('click', () => selectSite(null));
+}
+
+// ---------- list ----------
+function renderList(){
+  const scroll = document.getElementById('listScroll');
+  const visible = DATA.schools.filter(matches);
+  document.getElementById('listCount').textContent = `${visible.length} of ${DATA.schools.length}`;
+  document.getElementById('mapCount').textContent = `${visible.length} shown`;
+
+  if (!visible.length){
+    scroll.innerHTML = `<div class="empty-row">No sites match these filters.</div>`;
+    return;
+  }
+
+  const sorted = [...visible].sort((a,b) => {
+    if (a.borough !== b.borough) return BOROUGHS.indexOf(a.borough) - BOROUGHS.indexOf(b.borough);
+    return a.name.localeCompare(b.name);
+  });
+
+  scroll.innerHTML = sorted.map(s => {
+    const meta = STATUS_META[s.bucket];
+    const sel = s.idx === state.selected ? ' selected' : '';
+    return `
+      <button class="site-row${sel}" data-idx="${s.idx}" type="button">
+        <span class="marker" style="background:var(${meta.cssvar})"></span>
+        <span class="info">
+          <span class="name">${escapeHtml(s.name)}</span>
+          <span class="sub">${escapeHtml(s.address)}</span>
+        </span>
+        <span class="boro-tag">${s.borough}</span>
+      </button>`;
+  }).join('');
+
+  scroll.querySelectorAll('.site-row').forEach(row => {
+    row.addEventListener('click', () => selectSite(parseInt(row.dataset.idx, 10)));
+  });
+}
+
+// ---------- apply filters to map pins ----------
+function applyMapFilter(){
+  const pins = mapSvg.querySelectorAll('.pin');
+  pins.forEach(p => {
+    const idx = parseInt(p.dataset.idx, 10);
+    const s = DATA.schools[idx];
+    const ok = matches(s);
+    p.style.display = ok ? '' : 'none';
+    p.classList.toggle('selected', idx === state.selected);
+  });
+}
+
+// ---------- zoom ----------
+const FULL_VIEWBOX = [0, 0, 900, 900];
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function currentViewBox(){
+  return mapSvg.getAttribute('viewBox').split(' ').map(Number);
+}
+
+function animateViewBox(target){
+  const start = currentViewBox();
+  if (reduceMotion){
+    mapSvg.setAttribute('viewBox', target.join(' '));
+    return;
+  }
+  const dur = 420;
+  const t0 = performance.now();
+  function step(now){
+    const t = Math.min(1, (now - t0) / dur);
+    const ease = 1 - Math.pow(1 - t, 3);
+    const cur = start.map((v, i) => v + (target[i] - v) * ease);
+    mapSvg.setAttribute('viewBox', cur.join(' '));
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function syncBoroughChips(){
+  document.querySelectorAll('#boroChips .chip').forEach(c => {
+    c.setAttribute('aria-pressed', state.boroughs.has(c.dataset.val) ? 'true' : 'false');
+  });
+}
+
+function updateZoomUI(){
+  mapSvg.classList.toggle('is-zoomed', !!state.zoomedBorough);
+  document.getElementById('mapTitle').textContent = state.zoomedBorough || 'Five Boroughs';
+  const hint = document.getElementById('zoomHint');
+  if (state.zoomedBorough){
+    hint.innerHTML = `<button class="zoom-back" id="zoomBackBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>All boroughs</button>`;
+    document.getElementById('zoomBackBtn').addEventListener('click', () => setZoom(null, { clearSelection:true }));
+  } else {
+    hint.textContent = 'Click a borough to zoom in';
+  }
+  document.querySelectorAll('.boro-shape').forEach(p => {
+    p.classList.toggle('zoomed-active', p.dataset.boro === state.zoomedBorough);
+  });
+}
+
+function setZoom(name, opts){
+  opts = opts || {};
+  state.zoomedBorough = name;
+  if (name) state.boroughs = new Set([name]);
+  else state.boroughs.clear();
+  if (opts.clearSelection) state.selected = null;
+  syncBoroughChips();
+  animateViewBox(name ? DATA.bounds[name] : FULL_VIEWBOX);
+  updateZoomUI();
+  renderDetail();
+  renderList();
+  applyMapFilter();
+}
+
+function toggleZoomBorough(name){
+  setZoom(state.zoomedBorough === name ? null : name, { clearSelection:true });
+}
+
+// ---------- selection ----------
+function selectSite(idx){
+  state.selected = idx;
+  if (idx !== null){
+    const s = DATA.schools[idx];
+    if (state.zoomedBorough !== s.borough){
+      state.zoomedBorough = s.borough;
+      state.boroughs = new Set([s.borough]);
+      syncBoroughChips();
+      animateViewBox(DATA.bounds[s.borough]);
+      updateZoomUI();
+    }
+  }
+  renderDetail();
+  renderList();
+  applyMapFilter();
+  if (idx !== null){
+    const row = document.querySelector(`.site-row[data-idx="${idx}"]`);
+    if (row) row.scrollIntoView({ block:'nearest', behavior:'smooth' });
+  }
+}
+
+// ---------- tooltip ----------
+const tooltip = document.getElementById('tooltip');
+const mapWrap = document.getElementById('mapWrap');
+
+function showTooltip(s, evt){
+  const meta = STATUS_META[s.bucket];
+  tooltip.innerHTML = `<b>${escapeHtml(s.name)}</b>${escapeHtml(s.borough)} · <span class="t-status">${meta.label}</span>`;
+  const rect = mapWrap.getBoundingClientRect();
+  const x = evt.clientX - rect.left;
+  const y = evt.clientY - rect.top;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = (y - 8) + 'px';
+  tooltip.classList.add('show');
+}
+function hideTooltip(){ tooltip.classList.remove('show'); }
+
+// ---------- events: delegate on svg ----------
+function showBoroughTooltip(boro, e){
+  const name = boro.dataset.boro;
+  const count = DATA.schools.filter(s => s.borough === name).length;
+  const hintText = state.zoomedBorough === name ? 'Click to zoom out' : 'Click to zoom in';
+  tooltip.innerHTML = `<b>${name}</b>${count} site${count===1?'':'s'} · <span class="t-status">${hintText}</span>`;
+  const rect = mapWrap.getBoundingClientRect();
+  tooltip.style.left = (e.clientX - rect.left) + 'px';
+  tooltip.style.top = (e.clientY - rect.top - 8) + 'px';
+  tooltip.classList.add('show');
+}
+
+function wireMapEvents(){
+  mapSvg.addEventListener('mousemove', (e) => {
+    const pin = e.target.closest('.pin');
+    if (pin){ showTooltip(DATA.schools[parseInt(pin.dataset.idx, 10)], e); return; }
+    const boro = e.target.closest('.boro-shape');
+    if (boro && !boro.classList.contains('si')){ showBoroughTooltip(boro, e); return; }
+    hideTooltip();
+  });
+  mapSvg.addEventListener('mouseleave', hideTooltip);
+  mapSvg.addEventListener('click', (e) => {
+    const pin = e.target.closest('.pin');
+    if (pin){ selectSite(parseInt(pin.dataset.idx, 10)); return; }
+    const boro = e.target.closest('.boro-shape');
+    if (boro && !boro.classList.contains('si')){ toggleZoomBorough(boro.dataset.boro); }
+  });
+  mapSvg.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const pin = e.target.closest('.pin');
+    if (!pin) return;
+    e.preventDefault();
+    selectSite(parseInt(pin.dataset.idx, 10));
+  });
+}
+
+// ---------- toolbar events ----------
+function wireToolbar(){
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    state.search = e.target.value;
+    renderList();
+    applyMapFilter();
+  });
+
+  document.getElementById('boroChips').addEventListener('click', (e) => {
+    const btn = e.target.closest('.chip');
+    if (!btn) return;
+    toggleChip(btn, state.boroughs);
+    // manual multi-select of boroughs no longer maps to a single zoom target
+    if (state.boroughs.size !== 1 && state.zoomedBorough){
+      state.zoomedBorough = null;
+      animateViewBox(FULL_VIEWBOX);
+      updateZoomUI();
+    } else if (state.boroughs.size === 1){
+      const [only] = state.boroughs;
+      state.zoomedBorough = only;
+      animateViewBox(DATA.bounds[only]);
+      updateZoomUI();
+    }
+  });
+  document.getElementById('statusChips').addEventListener('click', (e) => {
+    const btn = e.target.closest('.chip');
+    if (!btn) return;
+    toggleChip(btn, state.statuses);
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    state.search = '';
+    state.boroughs.clear();
+    state.statuses = new Set(['early','upcoming','active']);
+    state.selected = null;
+    state.zoomedBorough = null;
+    document.getElementById('searchInput').value = '';
+    document.querySelectorAll('#boroChips .chip').forEach(c => c.setAttribute('aria-pressed','false'));
+    document.querySelectorAll('#statusChips .chip').forEach(c => c.setAttribute('aria-pressed', state.statuses.has(c.dataset.val) ? 'true' : 'false'));
+    animateViewBox(FULL_VIEWBOX);
+    updateZoomUI();
+    renderDetail();
+    renderList();
+    applyMapFilter();
+  });
+}
+
+function toggleChip(btn, set){
+  const val = btn.dataset.val;
+  const pressed = btn.getAttribute('aria-pressed') === 'true';
+  btn.setAttribute('aria-pressed', pressed ? 'false' : 'true');
+  if (pressed) set.delete(val); else set.add(val);
+  renderList();
+  applyMapFilter();
+}
+
+// ---------- init ----------
+renderMapShell();
+renderLegend();
+renderChips();
+renderStats();
+renderBreakdown();
+renderDetail();
+renderList();
+updateZoomUI();
+applyMapFilter();
+wireMapEvents();
+wireToolbar();
+</script>
