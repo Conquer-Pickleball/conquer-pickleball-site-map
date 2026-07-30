@@ -2,15 +2,43 @@
 
 Source of truth: https://dashboard-site-dusky.vercel.app/ (Conquer Youth Programs dashboard)
 Output: ../pickleball-site-map.html
-Living datasets:
-  - schools.json — one entry per site (name, borough, address, lat, lon, status, type, note)
-  - schedules.json — per site, an array of individual program-season sessions
-    (season, status, date_start, date_end, days_of_week, start_time, end_time,
-    raw_dates_text, raw_times_text) used to compute the "in session right now"
-    indicator client-side. Keys must match schools.json `name` fields exactly.
+Living dataset: schools.json — one entry per site (name, borough, address, lat,
+lon, status, type, note, grades, district, and optionally programs — see
+"Naming and district convention" below). `status` is still recorded for
+internal bookkeeping but is **not shown** on the donor-facing site — don't
+worry about getting Active/Upcoming/Finished perfectly right, just keep it
+roughly current.
+
+`schedules.json` still exists on disk but is no longer read by build.py (the
+"live in session now" feature it powered was removed) — ignore it, don't
+update it, and feel free to delete it if it's ever in the way.
 
 This is a git repo. You have write access — commit and push your changes at
 the end. If nothing changed, don't commit anything (no-op, no empty commit).
+
+## Naming and district convention
+
+Every school's `name` field must match the naming pattern used in Conquer's
+Google Drive folders for that site, which `build.py` (via PUBLIC_FIELDS)
+publishes as-is:
+
+- **DOE-coded sites** (has a building code like `PS30X`, `IS61Q`, `MS366K`):
+  `"<CODE> - <Name> - District <N>"`, e.g. `"PS9X - Ryer Avenue - District 10"`.
+  Match the Drive folder name for the school if you can find it; otherwise use
+  the DOE's own `location_name` from the Open Data lookup below.
+- **Everything else** (private school, YMCA, community center, CBO site with
+  no DOE code): `"<Name> - <Borough>"`, e.g. `"Horace Mann - Bronx"`.
+
+Every entry also needs a `district` field (a string, e.g. `"9"`) — the NYC
+community school district the site's lat/lon falls inside. Compute it with
+shapely point-in-polygon against `nyc_school_districts.geojson` (same file
+`add_districts.py` uses) rather than guessing from the DBN, since CBOs/private
+schools have no DBN district digit and even DOE schools can sit just outside
+their own numbered district's boundary. The one standing exception is
+District 75 (citywide special education) — it has no real polygon, so a
+75-coded site (e.g. `75X012`) keeps `"district": "75"` as a hardcoded value
+and its name keeps the literal "District 75" suffix rather than whatever
+geographic district it happens to sit in.
 
 Each run:
 
@@ -35,32 +63,21 @@ Each run:
      - Otherwise (private school, community center, CBO), geocode the street
        address with Nominatim (`https://nominatim.openstreetmap.org/search`,
        one request/second, set a real User-Agent).
+   - Name the entry per the "Naming and district convention" section above,
+     and compute its `district` field the same way.
    - Append a new object to schools.json with the same shape as existing
-     entries: name, borough, address, lat, lon, status, type, note.
-   - Also add an entry to schedules.json for it (see step 4a for the shape),
-     by reading its Dates / Days-Times columns off the dashboard.
+     entries: name, borough, address, lat, lon, status, type, note, grades,
+     district.
 
 4. For any *existing* schools.json entry whose status changed on the
-   dashboard (e.g. Upcoming -> Active), update its `status` field. Don't
-   touch lat/lon/address on existing entries unless the dashboard shows a
-   clearly different address for the same school.
-
-   4a. Whenever a site has a new or changed program row on the dashboard
-   (new season added, a Dates/Days-Times cell changed), update its entry in
-   schedules.json — an array of session objects per site name:
-   ```json
-   {"season": "Summer '26", "status": "Upcoming", "date_start": "2026-07-07",
-    "date_end": "2026-08-13", "days_of_week": ["mon","tue","thu"],
-    "start_time": "13:00", "end_time": "15:00",
-    "raw_dates_text": "7/6 – 8/13 (18) ...", "raw_times_text": "Mon / Tue / Thu 1-2pm & 2-3pm"}
-   ```
-   `days_of_week` uses lowercase 3-letter codes; times are 24-hour "HH:MM";
-   leave fields null/[] when the dashboard shows TBD. Every schools.json name
-   must have a key in schedules.json (an empty array is fine if there's truly
-   no usable schedule, e.g. a lead still in Discussion).
+   dashboard (e.g. Upcoming -> Active), update its `status` field (recorded
+   but not publicly displayed, see above). Don't touch lat/lon/address/name
+   on existing entries unless the dashboard shows a clearly different address
+   for the same school — if a school's Drive folder name changed, that's a
+   deliberate rename to flag in the summary, not something to silently apply.
 
 5. Run `python3 build.py` from this directory to regenerate
-   `../pickleball-site-map.html` from the updated schools.json + schedules.json.
+   `../pickleball-site-map.html` from the updated schools.json.
 
 6. `git add -A && git commit` with a short message describing what changed
    (e.g. "Add PS999X, mark 27Q106 active"), then `git push`. Report a

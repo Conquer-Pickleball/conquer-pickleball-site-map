@@ -130,15 +130,15 @@ def main():
         district_labels[num] = poly_centroid_svg(d_str)
         district_bounds[num] = bounds_from_d(d_str, DISTRICT_PAD_FRAC)
 
-        rep_point = poly.representative_point()
-        parent = None
-        for bname, bpoly in borough_polys.items():
-            if bpoly.contains(rep_point):
-                parent = bname
-                break
-        if parent is None:
-            # fall back to nearest borough polygon (handles coastline/simplification gaps)
-            parent = min(borough_polys.items(), key=lambda kv: kv[1].distance(rep_point))[0]
+        # Assign each district to whichever borough it overlaps the most —
+        # far more robust than a single representative-point containment
+        # test, which can miss (e.g. District 10/Riverdale's representative
+        # point falls in a simplification gap near the Harlem River and used
+        # to get assigned to Manhattan instead of the Bronx).
+        parent = max(
+            borough_polys.items(),
+            key=lambda kv: poly.intersection(kv[1]).area if poly.intersects(kv[1]) else 0.0,
+        )[0]
         district_borough[num] = parent
 
     geometry['district_rings'] = district_rings_simplified  # lon/lat, for point-in-polygon at build time

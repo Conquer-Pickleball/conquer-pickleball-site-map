@@ -55,13 +55,22 @@ def project_schools(schools, projection):
     return schools
 
 
-PUBLIC_FIELDS = ('name', 'borough', 'status', 'grades', 'x', 'y')
+PUBLIC_FIELDS = ('name', 'borough', 'district', 'grades', 'x', 'y')
 
 
 def to_public(schools):
     # Donor-facing site: no exact street addresses, no internal contract/
-    # financial/contact notes. Only what's safe to show publicly.
-    return [{k: s.get(k) for k in PUBLIC_FIELDS} for s in schools]
+    # financial/contact notes, no program status. Only what's safe to show
+    # publicly. `programs` is only present on the rare co-located site that
+    # merges two program names into one pin, so it's added conditionally
+    # rather than living in PUBLIC_FIELDS.
+    out = []
+    for s in schools:
+        rec = {k: s.get(k) for k in PUBLIC_FIELDS}
+        if s.get('programs'):
+            rec['programs'] = s['programs']
+        out.append(rec)
+    return out
 
 
 def main():
@@ -69,6 +78,13 @@ def main():
     geometry = json.load(open(os.path.join(HERE, 'geometry.json')))
 
     schools = project_schools(schools, geometry['projection'])
+
+    used_districts = sorted(set(s['district'] for s in schools), key=lambda x: (len(x), x))
+    # District 75 (citywide special education) has no real geographic
+    # polygon in the NYC "School Districts" dataset — it's filterable but
+    # has no boundary to draw or zoom to.
+    geo_districts = [d for d in used_districts if d in geometry['district_paths']]
+
     schools = to_public(schools)
 
     map_data = {
@@ -77,6 +93,13 @@ def main():
         'bounds': geometry['bounds'],
         'canvas': geometry['canvas'],
         'schools': schools,
+        'districts': {
+            'paths': {d: geometry['district_paths'][d] for d in geo_districts},
+            'labels': {d: geometry['district_labels'][d] for d in geo_districts},
+            'bounds': {d: geometry['district_bounds'][d] for d in geo_districts},
+            'borough': {d: geometry['district_borough'][d] for d in geo_districts},
+        },
+        'allDistricts': used_districts,
     }
 
     head = open(os.path.join(HERE, 'head.html')).read()
