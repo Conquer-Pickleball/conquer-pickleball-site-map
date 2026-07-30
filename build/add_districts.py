@@ -26,7 +26,7 @@ BOROUGHS_URL = "https://data.cityofnewyork.us/resource/gthc-hcne.geojson"
 DISTRICTS_RAW = os.path.join(HERE, "nyc_school_districts.geojson")
 BOROUGHS_RAW = os.path.join(HERE, "nyc_borough_boundaries.geojson")
 
-SIMPLIFY_TOL_DEG = 0.0015
+SIMPLIFY_TOL_DEG = 0.004
 DISTRICT_PAD_FRAC = 0.18
 
 

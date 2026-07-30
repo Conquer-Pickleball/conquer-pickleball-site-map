@@ -20,7 +20,7 @@ GEOJSON_URL = "https://data.cityofnewyork.us/resource/gthc-hcne.geojson"
 RAW_PATH = os.path.join(HERE, "nyc_borough_boundaries.geojson")
 
 CANVAS_W, CANVAS_H, PAD = 900, 900, 30
-SIMPLIFY_TOL_DEG = 0.0015
+SIMPLIFY_TOL_DEG = 0.004
 BOROUGH_PAD_FRAC = 0.14
 
 
