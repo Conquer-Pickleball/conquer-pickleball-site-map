@@ -88,6 +88,7 @@ def main():
         urllib.request.urlretrieve(BOROUGHS_URL, BOROUGHS_RAW)
 
     geometry = json.load(open(os.path.join(HERE, 'geometry.json')))
+    geometry.pop('district_rings', None)  # stale field from an older run; no longer written
     proj = geometry['projection']
     cos_lat0, min_x, min_y = proj['cos_lat0'], proj['min_x'], proj['min_y']
     scale, pad, canvas_h = proj['scale'], proj['pad'], proj['canvas_h']
@@ -107,7 +108,6 @@ def main():
 
     ddata = json.load(open(DISTRICTS_RAW))
 
-    district_rings_simplified = {}
     district_paths = {}
     district_labels = {}
     district_bounds = {}
@@ -122,8 +122,6 @@ def main():
             simplified = largest_polygon(simplified)
 
         ring = ring_of(simplified)
-        district_rings_simplified[num] = [[round(x, 6), round(y, 6)] for x, y in ring]
-
         pts = [to_svg(lo, la) for lo, la in ring]
         d_str = 'M ' + ' L '.join(f'{x},{y}' for x, y in pts) + ' Z'
         district_paths[num] = d_str
@@ -141,7 +139,6 @@ def main():
         )[0]
         district_borough[num] = parent
 
-    geometry['district_rings'] = district_rings_simplified  # lon/lat, for point-in-polygon at build time
     geometry['district_paths'] = district_paths
     geometry['district_labels'] = district_labels
     geometry['district_bounds'] = district_bounds
