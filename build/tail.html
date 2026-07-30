@@ -13,9 +13,14 @@ DATA.schools.forEach((s, i) => { s.idx = i; });
 function districtBorough(d){
   return (DATA.districts.borough && DATA.districts.borough[d]) || null;
 }
+// Only DOE school buildings are counted toward a district. YMCAs, private
+// schools, community centers and CUNY sit inside a district geographically
+// but aren't part of one, so they're bucketed separately under NON_DISTRICT.
+const NON_DISTRICT = 'none';
+
 function buildDistrictInfo(){
   const info = {};
-  DATA.schools.forEach(s => {
+  DATA.schools.filter(s => s.doe).forEach(s => {
     if (!info[s.district]) {
       info[s.district] = { borough: districtBorough(s.district) || s.borough, count: 0 };
     }
@@ -23,6 +28,7 @@ function buildDistrictInfo(){
   });
   return info;
 }
+const NON_DISTRICT_COUNT = DATA.schools.filter(s => !s.doe).length;
 const DISTRICT_INFO = buildDistrictInfo();
 const DISTRICT_NUMS = Object.keys(DISTRICT_INFO).sort((a, b) => {
   const ba = BOROUGHS.indexOf(DISTRICT_INFO[a].borough);
@@ -46,7 +52,9 @@ function baseName(name){
     .replace(/ - (Bronx|Brooklyn|Manhattan|Queens|Staten Island)$/, '');
 }
 function shortLabel(name){
-  const base = baseName(name);
+  // Drop the trailing venue category too — the tooltip and detail panel
+  // already carry it, and it crowds the pin label on the map.
+  const base = baseName(name).replace(/\s*\([^)]*\)\s*$/, '');
   const parts = base.split(' - ');
   const tail = parts.length > 1 ? parts.slice(1).join(' - ') : base;
   return tail.length > 24 ? tail.slice(0, 22) + '…' : tail;
@@ -54,10 +62,15 @@ function shortLabel(name){
 
 function matches(s){
   if (state.boroughs.size && !state.boroughs.has(s.borough)) return false;
-  if (state.district && s.district !== state.district) return false;
+  if (state.district === NON_DISTRICT){
+    if (s.doe) return false;
+  } else if (state.district && (!s.doe || s.district !== state.district)){
+    return false;
+  }
   if (state.search){
     const q = state.search.toLowerCase();
-    const haystack = `${s.name} ${s.borough} district ${s.district}`.toLowerCase();
+    const districtTerm = s.doe ? `district ${s.district}` : `${s.venue || ''} non-district`;
+    const haystack = `${s.name} ${s.borough} ${districtTerm}`.toLowerCase();
     if (!haystack.includes(q)) return false;
   }
   return true;
@@ -71,7 +84,7 @@ function pinMarkup(s){
       <circle class="halo" r="11"/>
       <line class="pin-leader" x1="6" y1="0" x2="11" y2="0"/>
       <circle class="hit" r="12" fill="transparent"/>
-      <circle class="core" r="7.5" fill="var(--accent)" stroke="#FFF7EC" stroke-width="1.75"/>
+      <circle class="core" r="7.5" fill="var(--accent)" stroke="var(--pin-ring)" stroke-width="1.75"/>
       <text class="pin-label" x="13" y="3.5">${escapeHtml(label)}</text>
     </g>`;
 }
@@ -127,7 +140,9 @@ function renderDistrictSelect(){
   sel.innerHTML = '<option value="">All Districts</option>' + DISTRICT_NUMS.map(n => {
     const info = DISTRICT_INFO[n];
     return `<option value="${n}">District ${n} — ${info.borough} (${info.count})</option>`;
-  }).join('');
+  }).join('') + (NON_DISTRICT_COUNT
+    ? `<option value="${NON_DISTRICT}">Non-district sites (${NON_DISTRICT_COUNT})</option>`
+    : '');
 }
 
 function renderDistrictVisibility(){
@@ -158,11 +173,10 @@ function renderChips(){
 function renderStats(){
   const el = document.getElementById('statRow');
   const total = DATA.schools.length;
-  const districtCount = new Set(DATA.schools.map(s => s.district)).size;
   el.innerHTML = `
     <div class="stat-chip accent"><span class="num">${total}</span><span class="lbl">Total Sites</span></div>
     <div class="stat-chip"><span class="num">${BOROUGHS.length}</span><span class="lbl">Boroughs</span></div>
-    <div class="stat-chip"><span class="num">${districtCount}</span><span class="lbl">Districts</span></div>
+    <div class="stat-chip"><span class="num">7.5k<span class="star">*</span></span><span class="lbl">Kids Taught</span></div>
   `;
 }
 
@@ -190,7 +204,7 @@ function renderBreakdown(){
 
 function renderDistrictBreakdown(){
   const el = document.getElementById('districtBreakdown');
-  const max = Math.max(...DISTRICT_NUMS.map(n => DISTRICT_INFO[n].count));
+  const max = Math.max(...DISTRICT_NUMS.map(n => DISTRICT_INFO[n].count), NON_DISTRICT_COUNT);
   el.innerHTML = DISTRICT_NUMS.map(n => {
     const info = DISTRICT_INFO[n];
     return `
@@ -199,7 +213,12 @@ function renderDistrictBreakdown(){
       <span class="bd-track"><span class="bd-fill" style="width:${(info.count/max*100).toFixed(0)}%"></span></span>
       <span class="bd-num">${info.count}</span>
     </button>`;
-  }).join('');
+  }).join('') + (NON_DISTRICT_COUNT ? `
+    <button type="button" class="bd-row" data-district="${NON_DISTRICT}" aria-pressed="${state.district === NON_DISTRICT}">
+      <span class="bd-label">Non-district</span>
+      <span class="bd-track"><span class="bd-fill" style="width:${(NON_DISTRICT_COUNT/max*100).toFixed(0)}%"></span></span>
+      <span class="bd-num">${NON_DISTRICT_COUNT}</span>
+    </button>` : '');
   el.querySelectorAll('.bd-row').forEach(row => {
     row.addEventListener('click', () => {
       setDistrict(state.district === row.dataset.district ? null : row.dataset.district);
@@ -219,9 +238,14 @@ function renderDetail(){
     return;
   }
   const s = DATA.schools[state.selected];
-  const nameHasDistrict = /District \d+/.test(s.name);
-  const districtLabel = s.district === '75' ? 'District 75 · Citywide' : `District ${s.district}`;
-  const pill = nameHasDistrict ? '' : `<span class="district-pill">${escapeHtml(districtLabel)}</span>`;
+  // Non-DOE venues get a category pill instead of a district they don't belong to.
+  let pill = '';
+  if (!s.doe){
+    if (s.venue) pill = `<span class="district-pill">${escapeHtml(s.venue)}</span>`;
+  } else if (!/District \d+/.test(s.name)){
+    const districtLabel = s.district === '75' ? 'District 75 · Citywide' : `District ${s.district}`;
+    pill = `<span class="district-pill">${escapeHtml(districtLabel)}</span>`;
+  }
   const gradesLine = s.grades ? `<div class="boro-type">${escapeHtml(s.borough)} · ${escapeHtml(s.grades)}</div>` : `<div class="boro-type">${escapeHtml(s.borough)}</div>`;
   const programsHtml = (s.programs && s.programs.length)
     ? `<ul class="programs">${s.programs.map(p => `<li>${escapeHtml(p)}</li>`).join('')}</ul>`
@@ -363,7 +387,15 @@ function toggleZoomBorough(name){
 function setDistrict(d){
   state.district = d;
   document.getElementById('districtSelect').value = d || '';
-  if (d){
+  if (d === NON_DISTRICT){
+    // These sites span several boroughs, so there's nothing single to zoom to.
+    state.zoomedBorough = null;
+    state.boroughs.clear();
+    state.selected = null;
+    syncBoroughChips();
+    animateViewBox(FULL_VIEWBOX);
+    updateZoomUI();
+  } else if (d){
     const boro = DISTRICT_INFO[d].borough;
     state.zoomedBorough = boro;
     state.boroughs = new Set([boro]);
@@ -409,8 +441,10 @@ const tooltip = document.getElementById('tooltip');
 const mapWrap = document.getElementById('mapWrap');
 
 function showTooltip(s, evt){
-  const districtLabel = s.district === '75' ? 'District 75' : `District ${s.district}`;
-  tooltip.innerHTML = `<b>${escapeHtml(s.name)}</b>${escapeHtml(s.borough)} · <span class="t-sub">${districtLabel}</span>`;
+  const subLabel = !s.doe
+    ? (s.venue || 'Non-district site')
+    : (s.district === '75' ? 'District 75' : `District ${s.district}`);
+  tooltip.innerHTML = `<b>${escapeHtml(s.name)}</b>${escapeHtml(s.borough)} · <span class="t-sub">${escapeHtml(subLabel)}</span>`;
   const rect = mapWrap.getBoundingClientRect();
   const x = evt.clientX - rect.left;
   const y = evt.clientY - rect.top;

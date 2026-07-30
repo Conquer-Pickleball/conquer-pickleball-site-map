@@ -15,20 +15,22 @@
     --brand-sage:#A2B882;
     --brand-lightsage:#FFF0CC;
 
-    --ink:#F0F1EE;
-    --ink-soft:#CED6C2;
-    --ink-faint:#A1B08D;
-    --paper:#1D2315;
-    --panel:#29311E;
-    --panel-2:#333C25;
-    --line:#505E3B;
-    --line-soft:#434F31;
-    --accent:#FF6A2B;
-    --accent-ink:#FFB27B;
-    --accent-2:var(--brand-cream);
-    --water:#151910;
-    --focus-ring:#FF6A2B;
-    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.55);
+    --ink:#2E2E00;
+    --ink-soft:#5C5720;
+    --ink-faint:#837C45;
+    --paper:#F99954;
+    --panel:#FFF6E4;
+    --panel-2:#FFEBC9;
+    --line:#E9CD9B;
+    --line-soft:#F5E3BC;
+    --accent:#D64000;
+    --accent-ink:#A83100;
+    --accent-2:var(--brand-mocha);
+    --water:#F8E7C4;
+    --pin-ring:#FFF7EC;
+    --eyebrow:#2E2E00;
+    --focus-ring:#D64000;
+    --shadow: 0 1px 2px rgba(52,52,0,.10), 0 10px 26px -14px rgba(52,52,0,.28);
     --radius-s:6px;
     --radius-m:10px;
     --display: "Arial Narrow", "Helvetica Neue Condensed", "Roboto Condensed", "Segoe UI", Arial, sans-serif;
@@ -93,22 +95,28 @@
     width:auto;
     height:58px;
   }
+  /* The JOOLA mark is black artwork, so it needs a light plate to sit on.
+     Light Sage is too close in value to the cream page field to read as a
+     badge, so this uses white with a hairline edge. */
   .brand-powered-by{
-    width:118px;
+    width:124px;
     height:auto;
     flex:none;
-    opacity:.95;
-    background:var(--brand-lightsage);
-    border-radius:3px;
-    padding:2px 3px;
+    background:#FFFFFF;
+    border:1px solid rgba(52,52,0,.12);
+    border-radius:4px;
+    padding:4px 6px;
+    box-shadow:0 1px 2px rgba(52,52,0,.10);
   }
   .title-block .eyebrow{
     font-family:var(--mono);
     font-size:11.5px;
     font-weight:600;
-    letter-spacing:.14em;
+    letter-spacing:.09em;
+    line-height:1.5;
     text-transform:uppercase;
-    color:var(--accent);
+    max-width:46ch;
+    color:var(--eyebrow);
   }
   .title-block h1{
     font-family:var(--display);
@@ -159,6 +167,7 @@
     color:var(--ink-faint);
   }
   .stat-chip.accent .num{ color:var(--accent); }
+  .stat-chip .num .star{ font-size:14px; vertical-align:super; color:var(--ink-faint); }
 
   /* ---------- Toolbar ---------- */
   .toolbar{
@@ -576,6 +585,11 @@
     padding-top:6px;
   }
   footer.credit a{ color:var(--ink-faint); }
+  footer.credit .footnote{
+    margin:0 0 10px;
+    color:var(--ink-soft);
+    font-size:12.5px;
+  }
 
   @media (prefers-reduced-motion: reduce){
     *{ transition:none !important; }
@@ -652,7 +666,7 @@ AABJRU5ErkJggg==
 " alt="Powered by JOOLA">
       </div>
       <div class="title-block">
-        <div class="eyebrow">Conquer Kids</div>
+        <div class="eyebrow">Conquer Kids &mdash; The Official Youth Program of the Brooklyn Pickleball Team, Powered by JOOLA</div>
         <h1>Youth Pickleball Site Map</h1>
         <p>Every school, community center, and partner site running Conquer Kids youth pickleball programming across the five boroughs.</p>
       </div>
@@ -711,6 +725,7 @@ AABJRU5ErkJggg==
   </section>
 
   <footer class="credit">
+    <p class="footnote">*Including community events, clinics, and school-wide demo days.</p>
     Site directory reconstructed from the Conquer Kids ops dashboard · geocoded via NYC DOE school locations (NYC Open Data) and OpenStreetMap · borough &amp; school district boundaries: NYC Department of City Planning
   </footer>
 </div>

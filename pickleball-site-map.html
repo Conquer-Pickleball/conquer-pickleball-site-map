@@ -15,20 +15,22 @@
     --brand-sage:#A2B882;
     --brand-lightsage:#FFF0CC;
 
-    --ink:#F0F1EE;
-    --ink-soft:#CED6C2;
-    --ink-faint:#A1B08D;
-    --paper:#1D2315;
-    --panel:#29311E;
-    --panel-2:#333C25;
-    --line:#505E3B;
-    --line-soft:#434F31;
-    --accent:#FF6A2B;
-    --accent-ink:#FFB27B;
-    --accent-2:var(--brand-cream);
-    --water:#151910;
-    --focus-ring:#FF6A2B;
-    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.55);
+    --ink:#2E2E00;
+    --ink-soft:#5C5720;
+    --ink-faint:#837C45;
+    --paper:#F99954;
+    --panel:#FFF6E4;
+    --panel-2:#FFEBC9;
+    --line:#E9CD9B;
+    --line-soft:#F5E3BC;
+    --accent:#D64000;
+    --accent-ink:#A83100;
+    --accent-2:var(--brand-mocha);
+    --water:#F8E7C4;
+    --pin-ring:#FFF7EC;
+    --eyebrow:#2E2E00;
+    --focus-ring:#D64000;
+    --shadow: 0 1px 2px rgba(52,52,0,.10), 0 10px 26px -14px rgba(52,52,0,.28);
     --radius-s:6px;
     --radius-m:10px;
     --display: "Arial Narrow", "Helvetica Neue Condensed", "Roboto Condensed", "Segoe UI", Arial, sans-serif;
@@ -93,22 +95,28 @@
     width:auto;
     height:58px;
   }
+  /* The JOOLA mark is black artwork, so it needs a light plate to sit on.
+     Light Sage is too close in value to the cream page field to read as a
+     badge, so this uses white with a hairline edge. */
   .brand-powered-by{
-    width:118px;
+    width:124px;
     height:auto;
     flex:none;
-    opacity:.95;
-    background:var(--brand-lightsage);
-    border-radius:3px;
-    padding:2px 3px;
+    background:#FFFFFF;
+    border:1px solid rgba(52,52,0,.12);
+    border-radius:4px;
+    padding:4px 6px;
+    box-shadow:0 1px 2px rgba(52,52,0,.10);
   }
   .title-block .eyebrow{
     font-family:var(--mono);
     font-size:11.5px;
     font-weight:600;
-    letter-spacing:.14em;
+    letter-spacing:.09em;
+    line-height:1.5;
     text-transform:uppercase;
-    color:var(--accent);
+    max-width:46ch;
+    color:var(--eyebrow);
   }
   .title-block h1{
     font-family:var(--display);
@@ -159,6 +167,7 @@
     color:var(--ink-faint);
   }
   .stat-chip.accent .num{ color:var(--accent); }
+  .stat-chip .num .star{ font-size:14px; vertical-align:super; color:var(--ink-faint); }
 
   /* ---------- Toolbar ---------- */
   .toolbar{
@@ -576,6 +585,11 @@
     padding-top:6px;
   }
   footer.credit a{ color:var(--ink-faint); }
+  footer.credit .footnote{
+    margin:0 0 10px;
+    color:var(--ink-soft);
+    font-size:12.5px;
+  }
 
   @media (prefers-reduced-motion: reduce){
     *{ transition:none !important; }
@@ -652,7 +666,7 @@ AABJRU5ErkJggg==
 " alt="Powered by JOOLA">
       </div>
       <div class="title-block">
-        <div class="eyebrow">Conquer Kids</div>
+        <div class="eyebrow">Conquer Kids &mdash; The Official Youth Program of the Brooklyn Pickleball Team, Powered by JOOLA</div>
         <h1>Youth Pickleball Site Map</h1>
         <p>Every school, community center, and partner site running Conquer Kids youth pickleball programming across the five boroughs.</p>
       </div>
@@ -711,6 +725,7 @@ AABJRU5ErkJggg==
   </section>
 
   <footer class="credit">
+    <p class="footnote">*Including community events, clinics, and school-wide demo days.</p>
     Site directory reconstructed from the Conquer Kids ops dashboard · geocoded via NYC DOE school locations (NYC Open Data) and OpenStreetMap · borough &amp; school district boundaries: NYC Department of City Planning
   </footer>
 </div>
@@ -774,12 +789,14 @@ const DATA ={
  },
  "schools": [
   {
-   "name": "Horace Mann - Bronx",
+   "name": "Horace Mann (Community Center) - Bronx",
    "borough": "Bronx",
    "district": "10",
    "grades": "Multiple grades",
    "x": 294.26,
-   "y": 82.89
+   "y": 82.89,
+   "doe": false,
+   "venue": "Community Center"
   },
   {
    "name": "MS391X - The Angelo Patri Middle School - District 10",
@@ -787,7 +804,8 @@ const DATA ={
    "district": "10",
    "grades": null,
    "x": 296.87,
-   "y": 176.3
+   "y": 176.3,
+   "doe": true
   },
   {
    "name": "PS/MS 5X - Port Morris School of Community Leadership - District 7",
@@ -795,7 +813,8 @@ const DATA ={
    "district": "7",
    "grades": "Grades 6-8",
    "x": 276.21,
-   "y": 276.43
+   "y": 276.43,
+   "doe": true
   },
   {
    "name": "PS12X - Eagles SOAR - Lewis & Clark - District 75",
@@ -803,7 +822,8 @@ const DATA ={
    "district": "75",
    "grades": "Special needs program (District 75)",
    "x": 393.79,
-   "y": 211.28
+   "y": 211.28,
+   "doe": true
   },
   {
    "name": "PS132X - Garrett A. Morgan - District 9",
@@ -811,7 +831,8 @@ const DATA ={
    "district": "9",
    "grades": null,
    "x": 278.47,
-   "y": 231.88
+   "y": 231.88,
+   "doe": true
   },
   {
    "name": "PS163X - Arthur A. Schomburg - District 9",
@@ -819,7 +840,8 @@ const DATA ={
    "district": "9",
    "grades": "Grades 3-5",
    "x": 293.48,
-   "y": 184.29
+   "y": 184.29,
+   "doe": true
   },
   {
    "name": "PS175X - City Island School - District 11",
@@ -827,7 +849,8 @@ const DATA ={
    "district": "11",
    "grades": "Grades K-5",
    "x": 506.7,
-   "y": 202.2
+   "y": 202.2,
+   "doe": true
   },
   {
    "name": "PS28X - Mount Hope - District 8",
@@ -835,7 +858,8 @@ const DATA ={
    "district": "8",
    "grades": "Grades 2-5",
    "x": 284.58,
-   "y": 192.47
+   "y": 192.47,
+   "doe": true
   },
   {
    "name": "PS294X - The Walton Avenue School - District 9",
@@ -843,7 +867,8 @@ const DATA ={
    "district": "9",
    "grades": null,
    "x": 262.32,
-   "y": 202.83
+   "y": 202.83,
+   "doe": true
   },
   {
    "name": "PS30X - Wilton School - District 7",
@@ -851,7 +876,8 @@ const DATA ={
    "district": "7",
    "grades": null,
    "x": 259.48,
-   "y": 288.31
+   "y": 288.31,
+   "doe": true
   },
   {
    "name": "PS311X - Lucero - District 9",
@@ -859,7 +885,8 @@ const DATA ={
    "district": "9",
    "grades": null,
    "x": 262.32,
-   "y": 220.83
+   "y": 220.83,
+   "doe": true
   },
   {
    "name": "PS357X - Young Voices Academy - District 11",
@@ -867,7 +894,8 @@ const DATA ={
    "district": "11",
    "grades": "Grade 4",
    "x": 358.61,
-   "y": 177.65
+   "y": 177.65,
+   "doe": true
   },
   {
    "name": "PS41X - Gun Hill Road - District 11",
@@ -875,7 +903,8 @@ const DATA ={
    "district": "11",
    "grades": null,
    "x": 351.04,
-   "y": 128.1
+   "y": 128.1,
+   "doe": true
   },
   {
    "name": "PS449X - Grant Avenue Elementary School - District 9",
@@ -883,7 +912,8 @@ const DATA ={
    "district": "9",
    "grades": "Grades 3-5",
    "x": 258.95,
-   "y": 242.03
+   "y": 242.03,
+   "doe": true
   },
   {
    "name": "PS70X - Max Schoenfeld - District 9",
@@ -891,7 +921,8 @@ const DATA ={
    "district": "9",
    "grades": null,
    "x": 276.74,
-   "y": 202.48
+   "y": 202.48,
+   "doe": true
   },
   {
    "name": "PS9X - Ryer Avenue - District 10",
@@ -899,7 +930,8 @@ const DATA ={
    "district": "10",
    "grades": "Grades K-5",
    "x": 293.82,
-   "y": 172.74
+   "y": 172.74,
+   "doe": true
   },
   {
    "name": "Dodge YMCA - Brooklyn",
@@ -907,15 +939,19 @@ const DATA ={
    "district": "15",
    "grades": null,
    "x": 122.61,
-   "y": 579.39
+   "y": 579.39,
+   "doe": false,
+   "venue": "YMCA"
   },
   {
-   "name": "Fort Greene - Ingersol - Brooklyn",
+   "name": "Fort Greene - Ingersol (Community Center) - Brooklyn",
    "borough": "Brooklyn",
    "district": "13",
    "grades": "Community program",
    "x": 131.89,
-   "y": 569.44
+   "y": 569.44,
+   "doe": false,
+   "venue": "Community Center"
   },
   {
    "name": "IS211K - John Wilson - District 18",
@@ -923,7 +959,8 @@ const DATA ={
    "district": "18",
    "grades": "Grades 6-8",
    "x": 300.46,
-   "y": 693.14
+   "y": 693.14,
+   "doe": true
   },
   {
    "name": "JHS278K - Marine Park - District 22",
@@ -931,7 +968,8 @@ const DATA ={
    "district": "22",
    "grades": "Grades 6-8",
    "x": 220.14,
-   "y": 781.33
+   "y": 781.33,
+   "doe": true
   },
   {
    "name": "MS366K - Science and Medicine MS - District 18",
@@ -939,7 +977,8 @@ const DATA ={
    "district": "18",
    "grades": "Grades 6-8",
    "x": 306.89,
-   "y": 682.25
+   "y": 682.25,
+   "doe": true
   },
   {
    "name": "PS11K - Purvis J. Behan - District 13",
@@ -947,7 +986,8 @@ const DATA ={
    "district": "13",
    "grades": "Grades 4-5",
    "x": 169.96,
-   "y": 588.41
+   "y": 588.41,
+   "doe": true
   },
   {
    "name": "PS124K - Silas B. Dutcher - District 15",
@@ -955,7 +995,8 @@ const DATA ={
    "district": "15",
    "grades": "Grades 4-5",
    "x": 124.3,
-   "y": 633.34
+   "y": 633.34,
+   "doe": true
   },
   {
    "name": "PS131K - P.S. 131 - District 15",
@@ -963,7 +1004,8 @@ const DATA ={
    "district": "15",
    "grades": "Grades 4-5",
    "x": 119.45,
-   "y": 698.5
+   "y": 698.5,
+   "doe": true
   },
   {
    "name": "PS149K - Danny Kaye - District 19",
@@ -971,7 +1013,8 @@ const DATA ={
    "district": "19",
    "grades": null,
    "x": 305.01,
-   "y": 628.72
+   "y": 628.72,
+   "doe": true
   },
   {
    "name": "PS177K - The Marlboro - District 21",
@@ -979,7 +1022,8 @@ const DATA ={
    "district": "21",
    "grades": "Grades 3-5",
    "x": 154.2,
-   "y": 777.86
+   "y": 777.86,
+   "doe": true
   },
   {
    "name": "PS200K - Benson School - District 20",
@@ -987,7 +1031,8 @@ const DATA ={
    "district": "20",
    "grades": "Grades 4-5",
    "x": 103.44,
-   "y": 790.93
+   "y": 790.93,
+   "doe": true
   },
   {
    "name": "PS307K - Daniel Hale Williams - District 13",
@@ -995,7 +1040,8 @@ const DATA ={
    "district": "13",
    "grades": "Grades 3-5",
    "x": 140.96,
-   "y": 549.68
+   "y": 549.68,
+   "doe": true
   },
   {
    "name": "PS38K - The Pacific School - District 15",
@@ -1003,23 +1049,28 @@ const DATA ={
    "district": "15",
    "grades": "Grades 4-5",
    "x": 138.69,
-   "y": 590.73
+   "y": 590.73,
+   "doe": true
   },
   {
-   "name": "Park Slope Armory - Brooklyn",
+   "name": "Park Slope Armory (YMCA) - Brooklyn",
    "borough": "Brooklyn",
    "district": "15",
    "grades": "Mixed ages",
    "x": 138.02,
-   "y": 644.89
+   "y": 644.89,
+   "doe": false,
+   "venue": "YMCA"
   },
   {
-   "name": "Allen Stevenson - Manhattan",
+   "name": "Allen Stevenson (Private School) - Manhattan",
    "borough": "Manhattan",
    "district": "2",
    "grades": "Grades 1-4",
    "x": 181.16,
-   "y": 373.05
+   "y": 373.05,
+   "doe": false,
+   "venue": "Private School"
   },
   {
    "name": "Campos Community Center - Manhattan",
@@ -1027,7 +1078,9 @@ const DATA ={
    "district": "1",
    "grades": "Elementary",
    "x": 148.58,
-   "y": 484.71
+   "y": 484.71,
+   "doe": false,
+   "venue": "Community Center"
   },
   {
    "name": "Guttman Community College - Manhattan",
@@ -1035,7 +1088,9 @@ const DATA ={
    "district": "2",
    "grades": "College students",
    "x": 136.5,
-   "y": 424.98
+   "y": 424.98,
+   "doe": false,
+   "venue": "CUNY"
   },
   {
    "name": "MS372M - Esperanza Preparatory Academy - District 4",
@@ -1043,7 +1098,8 @@ const DATA ={
    "district": "4",
    "grades": "Middle school",
    "x": 213.55,
-   "y": 328.45
+   "y": 328.45,
+   "doe": true
   },
   {
    "name": "MS450M - East Side Community School (Beacon) - District 1",
@@ -1052,6 +1108,7 @@ const DATA ={
    "grades": "Middle & high school",
    "x": 139.34,
    "y": 482.98,
+   "doe": true,
    "programs": [
     "University Settlement (CBO summer program)",
     "East Side Community Beacon (multi-season, middle & high school)"
@@ -1063,7 +1120,8 @@ const DATA ={
    "district": "2",
    "grades": null,
    "x": 187.42,
-   "y": 423.4
+   "y": 423.4,
+   "doe": true
   },
   {
    "name": "PS111M - Adolph S. Ochs - District 2",
@@ -1071,7 +1129,8 @@ const DATA ={
    "district": "2",
    "grades": null,
    "x": 125.86,
-   "y": 393.46
+   "y": 393.46,
+   "doe": true
   },
   {
    "name": "PS343M - The Peck Slip School - District 2",
@@ -1079,7 +1138,8 @@ const DATA ={
    "district": "2",
    "grades": "Grades 2-5",
    "x": 102.53,
-   "y": 532.65
+   "y": 532.65,
+   "doe": true
   },
   {
    "name": "IS113Q - Anthony J. Pranzo - District 24",
@@ -1087,7 +1147,8 @@ const DATA ={
    "district": "24",
    "grades": "Grades 6-8",
    "x": 362.75,
-   "y": 540.69
+   "y": 540.69,
+   "doe": true
   },
   {
    "name": "IS61Q - Leonardo Da Vinci - District 24",
@@ -1095,7 +1156,8 @@ const DATA ={
    "district": "24",
    "grades": "Middle school",
    "x": 360.18,
-   "y": 451.92
+   "y": 451.92,
+   "doe": true
   },
   {
    "name": "IS93Q - Ridgewood - District 24",
@@ -1103,7 +1165,8 @@ const DATA ={
    "district": "24",
    "grades": "Grade 7",
    "x": 286.0,
-   "y": 540.37
+   "y": 540.37,
+   "doe": true
   },
   {
    "name": "MS297Q - Hawtree Creek - District 27",
@@ -1111,7 +1174,8 @@ const DATA ={
    "district": "27",
    "grades": null,
    "x": 445.41,
-   "y": 614.92
+   "y": 614.92,
+   "doe": true
   },
   {
    "name": "PS-MS 164Q - Queens Valley School of the Arts - District 25",
@@ -1119,7 +1183,8 @@ const DATA ={
    "district": "25",
    "grades": null,
    "x": 432.78,
-   "y": 501.6
+   "y": 501.6,
+   "doe": true
   },
   {
    "name": "PS102Q - Bayview - District 24",
@@ -1127,7 +1192,8 @@ const DATA ={
    "district": "24",
    "grades": null,
    "x": 331.82,
-   "y": 473.52
+   "y": 473.52,
+   "doe": true
   },
   {
    "name": "PS106Q - Lighthouse - District 27",
@@ -1135,7 +1201,8 @@ const DATA ={
    "district": "27",
    "grades": null,
    "x": 537.53,
-   "y": 810.6
+   "y": 810.6,
+   "doe": true
   },
   {
    "name": "PS159Q - P.S. 159 - District 26",
@@ -1143,7 +1210,8 @@ const DATA ={
    "district": "26",
    "grades": null,
    "x": 505.9,
-   "y": 383.16
+   "y": 383.16,
+   "doe": true
   },
   {
    "name": "PS16Q - The Nancy DeBenedittis School - District 24",
@@ -1151,7 +1219,8 @@ const DATA ={
    "district": "24",
    "grades": "Grades 2-5",
    "x": 364.5,
-   "y": 434.62
+   "y": 434.62,
+   "doe": true
   },
   {
    "name": "PS176Q - Cambria Heights - District 29",
@@ -1159,7 +1228,8 @@ const DATA ={
    "district": "29",
    "grades": null,
    "x": 607.0,
-   "y": 590.63
+   "y": 590.63,
+   "doe": true
   },
   {
    "name": "PS239Q - P.S. 239 - District 24",
@@ -1167,7 +1237,8 @@ const DATA ={
    "district": "24",
    "grades": "Grades 2-3",
    "x": 284.55,
-   "y": 555.42
+   "y": 555.42,
+   "doe": true
   },
   {
    "name": "PS35Q - Nathaniel Woodhull - District 29",
@@ -1175,7 +1246,8 @@ const DATA ={
    "district": "29",
    "grades": "Grades 2-5",
    "x": 533.75,
-   "y": 521.28
+   "y": 521.28,
+   "doe": true
   },
   {
    "name": "PS60Q - Woodhaven - District 27",
@@ -1183,7 +1255,8 @@ const DATA ={
    "district": "27",
    "grades": null,
    "x": 378.82,
-   "y": 574.84
+   "y": 574.84,
+   "doe": true
   }
  ],
  "districts": {
@@ -1474,9 +1547,14 @@ DATA.schools.forEach((s, i) => { s.idx = i; });
 function districtBorough(d){
   return (DATA.districts.borough && DATA.districts.borough[d]) || null;
 }
+// Only DOE school buildings are counted toward a district. YMCAs, private
+// schools, community centers and CUNY sit inside a district geographically
+// but aren't part of one, so they're bucketed separately under NON_DISTRICT.
+const NON_DISTRICT = 'none';
+
 function buildDistrictInfo(){
   const info = {};
-  DATA.schools.forEach(s => {
+  DATA.schools.filter(s => s.doe).forEach(s => {
     if (!info[s.district]) {
       info[s.district] = { borough: districtBorough(s.district) || s.borough, count: 0 };
     }
@@ -1484,6 +1562,7 @@ function buildDistrictInfo(){
   });
   return info;
 }
+const NON_DISTRICT_COUNT = DATA.schools.filter(s => !s.doe).length;
 const DISTRICT_INFO = buildDistrictInfo();
 const DISTRICT_NUMS = Object.keys(DISTRICT_INFO).sort((a, b) => {
   const ba = BOROUGHS.indexOf(DISTRICT_INFO[a].borough);
@@ -1507,7 +1586,9 @@ function baseName(name){
     .replace(/ - (Bronx|Brooklyn|Manhattan|Queens|Staten Island)$/, '');
 }
 function shortLabel(name){
-  const base = baseName(name);
+  // Drop the trailing venue category too — the tooltip and detail panel
+  // already carry it, and it crowds the pin label on the map.
+  const base = baseName(name).replace(/\s*\([^)]*\)\s*$/, '');
   const parts = base.split(' - ');
   const tail = parts.length > 1 ? parts.slice(1).join(' - ') : base;
   return tail.length > 24 ? tail.slice(0, 22) + '…' : tail;
@@ -1515,10 +1596,15 @@ function shortLabel(name){
 
 function matches(s){
   if (state.boroughs.size && !state.boroughs.has(s.borough)) return false;
-  if (state.district && s.district !== state.district) return false;
+  if (state.district === NON_DISTRICT){
+    if (s.doe) return false;
+  } else if (state.district && (!s.doe || s.district !== state.district)){
+    return false;
+  }
   if (state.search){
     const q = state.search.toLowerCase();
-    const haystack = `${s.name} ${s.borough} district ${s.district}`.toLowerCase();
+    const districtTerm = s.doe ? `district ${s.district}` : `${s.venue || ''} non-district`;
+    const haystack = `${s.name} ${s.borough} ${districtTerm}`.toLowerCase();
     if (!haystack.includes(q)) return false;
   }
   return true;
@@ -1532,7 +1618,7 @@ function pinMarkup(s){
       <circle class="halo" r="11"/>
       <line class="pin-leader" x1="6" y1="0" x2="11" y2="0"/>
       <circle class="hit" r="12" fill="transparent"/>
-      <circle class="core" r="7.5" fill="var(--accent)" stroke="#FFF7EC" stroke-width="1.75"/>
+      <circle class="core" r="7.5" fill="var(--accent)" stroke="var(--pin-ring)" stroke-width="1.75"/>
       <text class="pin-label" x="13" y="3.5">${escapeHtml(label)}</text>
     </g>`;
 }
@@ -1588,7 +1674,9 @@ function renderDistrictSelect(){
   sel.innerHTML = '<option value="">All Districts</option>' + DISTRICT_NUMS.map(n => {
     const info = DISTRICT_INFO[n];
     return `<option value="${n}">District ${n} — ${info.borough} (${info.count})</option>`;
-  }).join('');
+  }).join('') + (NON_DISTRICT_COUNT
+    ? `<option value="${NON_DISTRICT}">Non-district sites (${NON_DISTRICT_COUNT})</option>`
+    : '');
 }
 
 function renderDistrictVisibility(){
@@ -1619,11 +1707,10 @@ function renderChips(){
 function renderStats(){
   const el = document.getElementById('statRow');
   const total = DATA.schools.length;
-  const districtCount = new Set(DATA.schools.map(s => s.district)).size;
   el.innerHTML = `
     <div class="stat-chip accent"><span class="num">${total}</span><span class="lbl">Total Sites</span></div>
     <div class="stat-chip"><span class="num">${BOROUGHS.length}</span><span class="lbl">Boroughs</span></div>
-    <div class="stat-chip"><span class="num">${districtCount}</span><span class="lbl">Districts</span></div>
+    <div class="stat-chip"><span class="num">7.5k<span class="star">*</span></span><span class="lbl">Kids Taught</span></div>
   `;
 }
 
@@ -1651,7 +1738,7 @@ function renderBreakdown(){
 
 function renderDistrictBreakdown(){
   const el = document.getElementById('districtBreakdown');
-  const max = Math.max(...DISTRICT_NUMS.map(n => DISTRICT_INFO[n].count));
+  const max = Math.max(...DISTRICT_NUMS.map(n => DISTRICT_INFO[n].count), NON_DISTRICT_COUNT);
   el.innerHTML = DISTRICT_NUMS.map(n => {
     const info = DISTRICT_INFO[n];
     return `
@@ -1660,7 +1747,12 @@ function renderDistrictBreakdown(){
       <span class="bd-track"><span class="bd-fill" style="width:${(info.count/max*100).toFixed(0)}%"></span></span>
       <span class="bd-num">${info.count}</span>
     </button>`;
-  }).join('');
+  }).join('') + (NON_DISTRICT_COUNT ? `
+    <button type="button" class="bd-row" data-district="${NON_DISTRICT}" aria-pressed="${state.district === NON_DISTRICT}">
+      <span class="bd-label">Non-district</span>
+      <span class="bd-track"><span class="bd-fill" style="width:${(NON_DISTRICT_COUNT/max*100).toFixed(0)}%"></span></span>
+      <span class="bd-num">${NON_DISTRICT_COUNT}</span>
+    </button>` : '');
   el.querySelectorAll('.bd-row').forEach(row => {
     row.addEventListener('click', () => {
       setDistrict(state.district === row.dataset.district ? null : row.dataset.district);
@@ -1680,9 +1772,14 @@ function renderDetail(){
     return;
   }
   const s = DATA.schools[state.selected];
-  const nameHasDistrict = /District \d+/.test(s.name);
-  const districtLabel = s.district === '75' ? 'District 75 · Citywide' : `District ${s.district}`;
-  const pill = nameHasDistrict ? '' : `<span class="district-pill">${escapeHtml(districtLabel)}</span>`;
+  // Non-DOE venues get a category pill instead of a district they don't belong to.
+  let pill = '';
+  if (!s.doe){
+    if (s.venue) pill = `<span class="district-pill">${escapeHtml(s.venue)}</span>`;
+  } else if (!/District \d+/.test(s.name)){
+    const districtLabel = s.district === '75' ? 'District 75 · Citywide' : `District ${s.district}`;
+    pill = `<span class="district-pill">${escapeHtml(districtLabel)}</span>`;
+  }
   const gradesLine = s.grades ? `<div class="boro-type">${escapeHtml(s.borough)} · ${escapeHtml(s.grades)}</div>` : `<div class="boro-type">${escapeHtml(s.borough)}</div>`;
   const programsHtml = (s.programs && s.programs.length)
     ? `<ul class="programs">${s.programs.map(p => `<li>${escapeHtml(p)}</li>`).join('')}</ul>`
@@ -1824,7 +1921,15 @@ function toggleZoomBorough(name){
 function setDistrict(d){
   state.district = d;
   document.getElementById('districtSelect').value = d || '';
-  if (d){
+  if (d === NON_DISTRICT){
+    // These sites span several boroughs, so there's nothing single to zoom to.
+    state.zoomedBorough = null;
+    state.boroughs.clear();
+    state.selected = null;
+    syncBoroughChips();
+    animateViewBox(FULL_VIEWBOX);
+    updateZoomUI();
+  } else if (d){
     const boro = DISTRICT_INFO[d].borough;
     state.zoomedBorough = boro;
     state.boroughs = new Set([boro]);
@@ -1870,8 +1975,10 @@ const tooltip = document.getElementById('tooltip');
 const mapWrap = document.getElementById('mapWrap');
 
 function showTooltip(s, evt){
-  const districtLabel = s.district === '75' ? 'District 75' : `District ${s.district}`;
-  tooltip.innerHTML = `<b>${escapeHtml(s.name)}</b>${escapeHtml(s.borough)} · <span class="t-sub">${districtLabel}</span>`;
+  const subLabel = !s.doe
+    ? (s.venue || 'Non-district site')
+    : (s.district === '75' ? 'District 75' : `District ${s.district}`);
+  tooltip.innerHTML = `<b>${escapeHtml(s.name)}</b>${escapeHtml(s.borough)} · <span class="t-sub">${escapeHtml(subLabel)}</span>`;
   const rect = mapWrap.getBoundingClientRect();
   const x = evt.clientX - rect.left;
   const y = evt.clientY - rect.top;

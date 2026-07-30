@@ -15,6 +15,7 @@ published HTML.
 import json
 import math
 import os
+import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROJECT = os.path.dirname(HERE)
@@ -57,6 +58,8 @@ def project_schools(schools, projection):
 
 PUBLIC_FIELDS = ('name', 'borough', 'district', 'grades', 'x', 'y')
 
+DOE_NAME_RE = re.compile(r' - District \d+$')
+
 
 def to_public(schools):
     # Donor-facing site: no exact street addresses, no internal contract/
@@ -67,6 +70,15 @@ def to_public(schools):
     out = []
     for s in schools:
         rec = {k: s.get(k) for k in PUBLIC_FIELDS}
+        # A site is "DOE" if it's an actual NYC DOE school building, which is
+        # exactly the set whose Drive-folder name carries a district number.
+        # Everything else (YMCAs, private schools, community centers, CUNY)
+        # sits inside a district geographically but isn't *of* it, so the UI
+        # labels those by venue category instead of by district. `district` is
+        # still published for all sites because the map still uses it to zoom.
+        rec['doe'] = bool(DOE_NAME_RE.search(s['name']))
+        if s.get('venue'):
+            rec['venue'] = s['venue']
         if s.get('programs'):
             rec['programs'] = s['programs']
         out.append(rec)

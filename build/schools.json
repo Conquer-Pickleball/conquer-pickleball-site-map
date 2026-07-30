@@ -1,6 +1,6 @@
 [
  {
-  "name": "Horace Mann - Bronx",
+  "name": "Horace Mann (Community Center) - Bronx",
   "borough": "Bronx",
   "address": "231 W 246th St, Bronx, NY 10471",
   "lat": 40.8933014,
@@ -9,7 +9,8 @@
   "type": "Private school",
   "note": "Summer camp + after-school program.",
   "grades": "Multiple grades",
-  "district": "10"
+  "district": "10",
+  "venue": "Community Center"
  },
  {
   "name": "MS391X - The Angelo Patri Middle School - District 10",
@@ -201,10 +202,11 @@
   "type": "YMCA",
   "note": "Added from Drive folder; program details TBD.",
   "grades": null,
-  "district": "15"
+  "district": "15",
+  "venue": "YMCA"
  },
  {
-  "name": "Fort Greene - Ingersol - Brooklyn",
+  "name": "Fort Greene - Ingersol (Community Center) - Brooklyn",
   "borough": "Brooklyn",
   "address": "77 Myrtle Ave, Brooklyn, NY 11201",
   "lat": 40.6936814,
@@ -213,7 +215,8 @@
   "type": "Community Center",
   "note": "Summer '25 program.",
   "grades": "Community program",
-  "district": "13"
+  "district": "13",
+  "venue": "Community Center"
  },
  {
   "name": "IS211K - John Wilson - District 18",
@@ -348,7 +351,7 @@
   "district": "15"
  },
  {
-  "name": "Park Slope Armory - Brooklyn",
+  "name": "Park Slope Armory (YMCA) - Brooklyn",
   "borough": "Brooklyn",
   "address": "361 15th St, Brooklyn, NY 11215",
   "lat": 40.662725,
@@ -357,10 +360,11 @@
   "type": "YMCA",
   "note": "Mixed-age community program.",
   "grades": "Mixed ages",
-  "district": "15"
+  "district": "15",
+  "venue": "YMCA"
  },
  {
-  "name": "Allen Stevenson - Manhattan",
+  "name": "Allen Stevenson (Private School) - Manhattan",
   "borough": "Manhattan",
   "address": "132 E 78th St, New York, NY 10075",
   "lat": 40.7742572,
@@ -369,7 +373,8 @@
   "type": "Private school",
   "note": "Multi-season, 1st/2nd + 3rd/4th grade cohorts.",
   "grades": "Grades 1-4",
-  "district": "2"
+  "district": "2",
+  "venue": "Private School"
  },
  {
   "name": "Campos Community Center - Manhattan",
@@ -381,7 +386,8 @@
   "type": "Community Center",
   "note": "Prospective site, elementary age, likely 1 day/week.",
   "grades": "Elementary",
-  "district": "1"
+  "district": "1",
+  "venue": "Community Center"
  },
  {
   "name": "Guttman Community College - Manhattan",
@@ -393,7 +399,8 @@
   "type": "CUNY",
   "note": "Evening sessions held at PS 9 Sarah Anderson.",
   "grades": "College students",
-  "district": "2"
+  "district": "2",
+  "venue": "CUNY"
  },
  {
   "name": "MS372M - Esperanza Preparatory Academy - District 4",
